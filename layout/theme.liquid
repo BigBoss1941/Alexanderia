@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="">
+<head>
+  <title>{{ page_title }}</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="description" content="{{ page_description | escape }}">
+  <link rel="canonical" href="{{ canonical_url }}">
+  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+  {{ content_for_header }} <!-- Header hook for plugins -->
+  {{ 'application.css' | asset_url | stylesheet_tag }}
+  {{ 'application.js' | asset_url | script_tag }}
+  {{ 'header.css' | asset_url | stylesheet_tag }}
+  <link rel="stylesheet" href="{{ 'cart-drawer.css' | asset_url}}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="{{'anime.min.js' | asset_url }}"></script>
+
+</head>
+<body class="scrol">
+ <div class="wrapper_main" style="scroll-behavior: smooth; padding-top: 9vh">
+   {% section 'header' %}
+   {% section 'menu'%}
+   {% section 'predictive-search'%}
+
+
+   <main role="main">
+     {{ content_for_layout }}
+   </main>
+   {% section 'cart-drawer'%}
+   {% section 'search'%}
+   {% section 'footer' %}
+ </div>
+
+
+</body>
+
+</html>
+
+<style>
+  :root{
+    --conic-gradient: conic-gradient(
+            #441c77,
+            #000000        );
+    --conic-gradient2: conic-gradient(
+            #3586c4,
+            #edf5f5);
+  }
+  html, body {
+    margin:0;
+    padding:0;
+    height: 100%;
+    width: 100vw;
+    scrollbar-width: none;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+  }
+  .wrapper_main {
+    height: 100%;
+    overflow-x: clip;
+
+  }
+  .theme_button{
+    color: white;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+    cursor: pointer;
+
+    transition: transform .3s ease;
+  }
+  .feature_background{
+    position: absolute;
+    width: 310%;
+    height: 32rem;
+    background: var(--conic-gradient);
+    animation: spin 3s infinite alternate;
+  }
+
+  .theme_button:after:hover{
+    box-shadow: inset 380px 0 0 0 white;
+    position: absolute;
+  }
+  .feature_background2{
+    position: absolute;
+    width: 310%;
+    height: 32rem;
+    background: var(--conic-gradient2);
+    animation: spin 3s infinite alternate;
+  }
+  .feature_background:hover{
+    animation: spin 6s infinite alternate;
+
+  }
+  @keyframes spin {
+    to{
+      transform: rotate(360deg);
+    }
+  }
+</style>

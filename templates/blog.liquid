@@ -1,0 +1,25 @@
+<section style="padding-top: 9vh">
+  {% paginate blog.articles by 5 %}
+
+    {% for article in blog.articles %}
+      <div>
+        <h2><a href="{{ article.url }}">{{ article.title }}</a></h2>
+        {{ article.author }} @ {{ article.created_at }}
+        <div>
+          {% if article.excerpt.size > 0 %}
+            {{ article.excerpt }}
+          {% else %}
+            <p>{{ article.content | strip_html | truncatewords: 100 }}</p>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+
+    {% if paginate.pages > 1 %}
+      {{ paginate | default_pagination }}
+    {% endif %}
+    <h1 style="display: flex; align-items: center;justify-content: center; width: 100%;height: 91vh; text-align: center; font-family: Montserrat,sans-serif">Nothing yet :)</h1>
+
+  {% endpaginate %}
+
+</section>

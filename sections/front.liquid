@@ -1,0 +1,357 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@1,6..96,600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz@1,6..96&display=swap" rel="stylesheet">
+<script src="{{'splide.min.js' | asset_url}}"></script>
+<link href="{{'splide.min.css' | asset_url}}" rel="stylesheet">
+
+<section class="secfr" style="">
+        <div class="set1">
+            <div id="tiles"></div>
+            <div class="Header1 activated">
+                <article style="z-index: 30" class="title_h">
+                    <p>Come for Alice, Stay for the <span style="color: white; background-color: #441c77; font-weight: lighter;text-transform: uppercase;font-family: 'Montserrat Thin',sans-serif">Rabbit</span><br/></p>
+                    <a href="/collections/high-couture" class="theme_button slide_btn_1 notme">
+                        <span class="btn_i" style=" z-index: 20;text-decoration: none">Learn More</span>
+                        <div class="feature_background"></div>
+                    </a>
+                </article>
+
+                <img alt="" class="rabbit" style="filter: brightness(0.8)contrast(1.05);object-fit: cover;z-index: 10;height: 88.3vmin" src="{{ 'model1.png' | asset_url}}"/>
+            </div>
+            <div class="Header2">
+                <article class="title_h2">
+                    Or don't. <span style="color: white; background-color: #441c77; font-weight: lighter;text-transform: uppercase;font-family: 'Montserrat Thin',sans-serif;text-decoration: none">Wonderland</span> is nice too<br/>
+                    <a href="/collections/high-couture" class="theme_button slide_btn_1">
+                        <span class="btn_i2" style=" z-index: 20;text-decoration: none">Learn More</span>
+                        <div class="feature_background2"></div>
+                    </a>
+                </article>
+
+                <img class="rabbit" style="filter: brightness(0.9);object-fit: cover;z-index: 5;height: 88.3vmin; width: 50vmin; " src="{{ 'model2.png' | asset_url}}"/>
+            </div>
+        </div>
+</section>
+
+<style>
+    .rabbit{
+        pointer-events: none;
+    }
+    @keyframes slide-left {
+        from{
+            left: -1rem;
+            opacity: 0;
+        }
+    }
+    .Header1.activated{
+        opacity: 1;
+    }
+    @media screen and (max-width: 915px){
+        .Header1{
+            display: flex;
+            flex-direction: column;
+        }
+        .rabbit{
+            height: 81vmin;
+            width: 40vmin;
+            z-index: 6;
+            position: absolute;
+            top: 1rem;
+            left: 30%;
+        }
+        .slide_btn_1{
+            position: absolute;
+
+            margin-left: 4rem;
+            width: 7em;
+            height: 2em;
+            font-size: 0.8em;
+
+            z-index: 20;
+        }
+        .notme{
+            top: 4rem;
+        }
+    }
+    @media screen and (min-width: 915px){
+        .rabbit{
+            height: 81vmin;
+            width: 40vmin;
+            z-index: 6;
+            position: absolute;
+            top: 1rem;
+            left: 70%;
+        }
+        .slide_btn_1{
+            position: absolute;
+            top: 3.5rem;
+            margin-left: 7rem;
+            width: 7em;
+            height: 2em;
+            font-size: 0.8em;
+
+            z-index: 20;
+        }
+    }
+    .Header2.activated{
+        opacity: 1;
+    }
+
+    .btn_i{
+        background-color: rgb(15, 15, 15);
+        width: calc(100% - 2px);
+        height: calc(100% - 2px);
+
+        box-shadow: inset 0 0 0 0 white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.5s ease;
+    }
+    .btn_i:hover{
+        width: calc(100% - 4px);
+        height: calc(100% - 4px);
+        font-size: 1.05em;
+
+    }
+    .btn_i2{
+        background-color: rgb(15, 15, 15);
+        width: calc(100% - 2px);
+        height: calc(100% - 2px);
+
+        box-shadow: inset 0 0 0 0 #A3BED2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.5s ease;
+    }
+    .btn_i2:hover{
+        width: calc(100% - 4px);
+        height: calc(100% - 4px);
+        font-size: 1.05em;
+
+    }
+
+    .secfr{
+        background-color: black;
+        height: 91vh;
+    }
+    .Header1{
+        z-index: 7;
+        opacity: 0;
+    }
+    .Header2{
+        opacity: 0;
+    }
+    .title_h{
+        position: absolute; left: 1em; top: 45%; z-index: 3; color: white; font-size: 2.5rem;
+        font-family: 'Bodoni Moda', serif;
+        font-weight: 200;
+        letter-spacing: 1px;
+        animation: slide-left 1s ease-out;
+    }
+    @media screen and (min-width: 915px){
+        .title_h{
+            position: absolute; left: 1em; top: 45%; z-index: 3; color: white; font-size: 2.5rem;
+            font-family: 'Bodoni Moda', serif;
+            font-weight: 200;
+            letter-spacing: 1px;
+            animation: slide-left 1s ease-out;
+        }
+    }
+    @media screen and (max-width: 915px){
+        .title_h{
+            position: absolute; left: 5%; top: 45%; z-index: 3; color: white; font-size: 2.5rem;
+            font-family: 'Bodoni Moda', serif;
+            font-weight: 200;
+            letter-spacing: 1px;
+            animation: slide-left 1s ease-out;
+            width: 95%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .rabbit{
+            pointer-events: none;
+        }
+    }
+    .title_h2{
+        position: absolute; left: 1em; top: 45%; z-index: 3; color: black; font-size: 2.5rem;
+        font-family: 'Bodoni Moda', serif;
+        font-weight: 300;
+        letter-spacing: 1px;
+        animation: slide-left 1s ease-out;
+    }
+
+    .Header2{
+
+    }
+    :root{
+        --fg1: #441c77;
+        --fg2: rgb(0,0,0);
+        --back: rgb(255, 255, 255);
+    }
+    @keyframes background-pan {
+        from {
+            background-position: 0 center;
+        }
+        to {
+            background-position: -200% center;
+        }
+    }
+    .set1{
+        animation: background-pan 8s linear infinite;
+        background: linear-gradient(
+                to right,
+                var(--fg1),
+                var(--fg2),
+                var(--fg1)
+        );
+        background-size: 200%;
+        height: 91vh;
+        width: 100%;
+        position: relative;
+        transition: animation 2s ease;
+    }
+    .set2{
+        animation: background-pan 8s linear infinite;
+        background: linear-gradient(
+                to right,
+                rgb(125, 173, 234),
+                rgb(125, 173, 234),
+                rgb(192, 182, 182),
+                rgb(125, 173, 234)
+        );
+        background-size: 200%;
+        height: 91vh;
+        width: 100%;
+        position: relative;
+        transition: animation 2s ease;
+    }
+    #tiles{
+        height: calc(91vh - 1px);
+        width: calc(100vw - 1px);
+        position: relative;
+        z-index: 2;
+
+        display: grid;
+        grid-template-columns: repeat(var(--columns), 1fr);
+        grid-template-rows: repeat(var(--rows), 1fr);
+    }
+    .tile{
+        cursor: pointer;
+        position: relative;
+    }
+    .gut:hover {
+        background-color: rgb(30, 30, 30);
+        transition: 0.1s ease;
+    }
+
+    .gut {
+        background-color: rgb(15, 15, 15);
+        height: calc(100%);
+        width: calc(100%);
+    }
+    .gut_w{
+        background-color: rgb(227, 225, 226);
+        height: calc(100% - 1px);
+        width: calc(100% - 1px);
+    }
+    .gut_w:hover {
+        background-color: #A3BED2;
+    }
+
+
+</style>
+<script>
+    let toggled = false;
+    const wrapper = document.getElementById("tiles");
+    const size = document.body.clientWidth > 800 ? 100 : 50;
+    let columns = 0,
+        rows = 0;
+    columns = Math.floor(document.body.clientWidth / 50);
+    rows = Math.floor(document.body.clientHeight / 50);
+
+    const colors = [
+        "rgb(20, 20, 255)",
+        "rgb(15, 15, 15)"
+    ];
+    let count = -1;
+    const sec = document.querySelector(".set1");
+    const H1 = document.querySelector(".Header1")
+    const H2 = document.querySelector(".Header2")
+    const handleOnClick = index => {
+        toggled = !toggled;
+        if(sec.classList.contains("set1")) {
+            sec.classList.remove("set1");
+            sec.classList.add("set2");
+        }
+        else {
+            sec.classList.remove("set2");
+            sec.classList.add("set1");
+        }
+
+        console.log("hi")
+        anime({
+            targets: ".gut",
+            opacity: toggled ? 0 : 1,
+            delay: anime.stagger(50, {
+                grid: [columns, rows],
+                from: index
+            })
+        });
+        if(toggled){
+            H1.classList.remove("activated");
+            H2.classList.add("activated");
+        }
+        else{
+            H2.classList.remove("activated");
+            H1.classList.add("activated");
+        }
+
+    }
+
+
+    const createTile = index => {
+        const tile = document.createElement("div");
+        const tile_wrap = document.createElement("div");
+        const tile_w = document.createElement("div");
+        tile.classList.add("gut");
+        tile_wrap.classList.add("gut_w");
+        tile.onclick = e => handleOnClick(index);
+        tile_wrap.append(tile)
+        tile_w.classList.add("tile");
+
+        tile_w.append(tile_wrap)
+
+
+        return tile_wrap;
+    }
+    const createTiles = quantity => {
+        Array.from(Array(quantity)).map((tile, index) => {
+            wrapper.appendChild(createTile(index));
+        });
+    }
+    createTiles();
+    const createGrid = () => {
+        wrapper.innerHTML = "";
+
+        const size = document.body.clientWidth > 800 ? 100 : 50;
+
+        columns = Math.floor(document.body.clientWidth / size);
+        rows = Math.floor(document.body.clientHeight / size);
+
+        wrapper.style.setProperty("--columns", columns);
+        wrapper.style.setProperty("--rows", rows);
+
+        createTiles(columns * rows);
+    }
+
+    createGrid();
+    window.onresize = () => createGrid();
+
+</script>
+{{'front.css' | asset_url | stylesheet_tag}}

@@ -1,0 +1,311 @@
+
+<section class="slow">
+  <section class="slow" style="height: 70vh">
+    <div style="height: 100%;position: relative; z-index: 30">
+      <img alt="" draggable="false" style="width: 100%;height: 100%;object-fit: cover" src="{{ collection.featured_image.src | image_url: large }}">
+      <div style="background-color: rgba(53,33,89,0.51); position: absolute; top: 0; left: 0; height: 100%; z-index: 3; width: 100%"></div>
+      <div class="tth" style="position: absolute;z-index: 4;background-color: rgba(0,0,0,0.5);border-radius: 1em;padding-bottom: 2em;  top: 42%; left: 10%;font-family: Montserrat, sans-serif;color: #EFEFEF;text-align: center; width: 80%">
+        <h1 class="tittle" style="">{{ collection.title }}</h1>
+        <p>{{ collection.description }}</p>
+      </div>
+    </div>
+  </section>
+    <style>
+        @media screen and (min-width: 915px){
+            .tittle{
+                font-size: 3.5em; text-transform: uppercase
+            }
+        }
+        @media screen and (max-width: 915px){
+            .tittle{
+                font-size: 1.5em; text-transform: uppercase;text-align: center;margin-top: 10%;
+            }
+        }
+    </style>
+      <section class="slow" style="display: flex; flex-direction: row; flex-wrap: wrap">
+          {% unless  collection.all_products_count == 0 %}
+              <div style="width: 100%; height: 6vh;display: flex; flex-direction: row;position: sticky; top: calc(9vh - 1px); z-index: 40; ">
+                  <div style="font-family: Montserrat,sans-serif;color: #999999;display: flex;flex: 1 70%; justify-content: center;align-items: center; border-top: 1px solid #d3d3d3;border-left: 1px solid #d3d3d3;border-bottom: 1px solid #d3d3d3; height: 100%;background-color: white">
+                      {{ collection.all_products_count }} {{ collection.all_products_count | pluralize: 'Item', 'Items' }} total
+                  </div>
+                  <div style="flex: 1 30%;text-align: center;border: 1px solid #d3d3d3; height: 100%;background-color: white; position: relative">
+                      <a style="  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */;cursor: pointer;width: 100%; height: 100%;display: flex; align-items: center; justify-content: center;font-family: Montserrat,sans-serif; font-size: 0.85em" aria-controls="sort-by-popover" class="sortin" aria-haspopup="dialog" aria-expanded="false">
+                  <span style="" class="text-with-icon justify-center">Sort by<svg class="spin" id="mee" style="transition: 0.5s ease;padding-left: 7px" aria-hidden="true" focusable="false" fill="none" width="10" viewBox="0 0 10 10">
+      <path  d="m1 3 4 4 4-4" stroke="currentColor" stroke-linecap="square"></path>
+    </svg></span>
+                      </a>
+                      <div class="not" id="sort-by" style="top: 100%;z-index: 15;position: absolute;transition: 0.3s ease-out; width: calc(100%);margin-left: -1px;border-bottom: 1px solid #d3d3d3;border-left: 1px solid #d3d3d3;border-right: 1px solid #d3d3d3;">
+                          {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+
+                          {% for option in collection.sort_options %}
+                              <div   data-value="{{ option.value }}" {% if option.value == sort_by %}class="option red"
+                                      {% else %} class="option"{% endif %}>
+                                  {{ option.name }}
+                              </div>
+                          {% endfor %}
+                      </div>
+                      <script>
+                          document.addEventListener("DOMContentLoaded", function(event) {
+                              let scrollpos = localStorage.getItem('scrollpos');
+                              if (scrollpos !== '0') {window.scrollTo(0, scrollpos);
+                                  localStorage.setItem('scrollpos', 0);
+                              }
+                          });
+
+                      </script>
+                      <script>
+                          Shopify.queryParams = {};
+
+                          // Preserve existing query parameters
+                          if (location.search.length) {
+                              let params = location.search.substr(1).split('&');
+
+                              for (let i = 0; i < params.length; i++) {
+                                  let keyValue = params[i].split('=');
+
+                                  if (keyValue.length) {
+                                      Shopify.queryParams[decodeURIComponent(keyValue[0])] = decodeURIComponent(keyValue[1]);
+                                  }
+                              }
+                          }
+                          const sortbtn = document.querySelector("#sort-by");
+                          const click = document.querySelector(".sortin");
+                          click.addEventListener("click", e => {
+                              if(sortbtn.classList.contains("not")){
+                                  sortbtn.classList.remove("not");
+                                  sortbtn.classList.add("act");
+                                  document.querySelector("#mee").classList.remove('spin')
+                              }
+                              else{
+                                  sortbtn.classList.remove("act");
+                                  sortbtn.classList.add("not");
+                                  document.querySelector("#mee").classList.add('spin')
+                              }
+                              document.querySelectorAll('.option').forEach(option => {
+                                  option.addEventListener("click", e => {
+                                      document.querySelector(".red").classList.remove('red')
+                                      option.classList.add("red");
+
+                                      localStorage.setItem('scrollpos', window.scrollY);
+                                      let value = e.target.dataset.value;
+
+                                      Shopify.queryParams.sort_by = value;
+                                      location.search = new URLSearchParams(Shopify.queryParams).toString();
+                                  })
+                              } )
+                          })
+                      </script>
+                      <script>
+
+
+                          // Update sort_by query parameter on select change
+                          document.querySelector('#sort-by').addEventListener('change', function(e) {
+                              let value = e.target.value;
+
+                              Shopify.queryParams.sort_by = value;
+                              location.search = new URLSearchParams(Shopify.queryParams).toString();
+                          });
+                      </script>
+
+                  </div>
+              </div>
+              <style>
+                  .sortin:active{
+                      background-color: #e5e4e4;
+                  }
+                  .red{
+                      color: #354c94;
+                  }
+                  .option:hover{
+                      color: rebeccapurple;
+                      background-color: #e8e7e7;
+                      cursor: pointer;
+                  }
+                  .option{
+                      display: flex; align-items: center;width: 100%; justify-content: center;height: 7vh; background-color: white;font-family: Montserrat,sans-serif; font-size: 0.8em
+                  }
+                  .act{
+                      opacity: 1;
+                  }
+                  .not{
+                      opacity: 0;
+                      pointer-events: none;
+                  }
+                  .spin{
+                      transform: rotateX(180deg);
+                  }
+              </style>
+          {% endunless %}
+          {% paginate collection.products by 10 %}
+              {% for product in collection.products %}
+                  <div class="cntnr" id="sli{{forloop.index}}" style=";gap: 5%; height: 100%; display: flex; flex-direction: column; letter-spacing: 0.18em">
+                      <a class="qanchor" style="overflow: clip;position: relative;height: 60vmin;width: 50vmin;" href="{{product.url}}">
+                          <div style="overflow: clip;width: 100%; height: 100%; z-index: 40; border-radius: 0.6em">
+                              <img src="{{ product.featured_image | image_url: large}}" alt="" draggable="false" style="height: 60vmin;width: 50vmin; object-fit: cover">
+                              <form style="" action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm">
+                                  <input style="position: absolute; top: 200%; opacity: 0" id="Quantity" name="id" value="{{ product.variants.first.id }}"/>
+                                  <input style="position: absolute; top: 200%; opacity: 0" id="Quantity" name="quantity" value="1"/>
+                                  <button class="qadd" style="position: absolute; bottom: 10%; right: 10%" type="submit" name="add" id="AddToCart">+</button>
+                              </form>
+                          </div>
+                      </a>
+                      <a class="title-p" style="margin-top: 2em;text-decoration: none; color: black" href="{{product.url}}"><h1 style="font-weight: lighter;font-size: 0.75rem;text-align: center; font-family: Montserrat,sans-serif">{{product.title }}</h1></a>
+                      <h2 style="margin-top: 1em;font-weight: lighter;font-size: 0.65rem;text-align: center; font-family: Montserrat,sans-serif">{{product.price | money}} {{shop.currency}}</h2>
+                      {% unless product.available %}<br><span style="color: red; font-family: Montserrat,sans-serif">sold out</span>{% endunless %}
+                  </div>
+              {% else %}
+                  <div style="height: 80vh; display: flex; align-items: center; justify-content: center; font-family: Montserrat,sans-serif">
+                      <p>no matches :(</p>
+                  </div>
+                  {% capture null %}{{ null | plus:1 }}{% endcapture %}
+              {% endfor %}
+              {% if paginate.pages > 1 %}
+                  <div style="width: 100%; margin-top: 10vh; margin-bottom: 10vh">
+                      <nav class="Pagination">
+                          <div class="Pagination__List">
+                              {%- if paginate.previous -%}
+                                  <div>
+                                      <a
+                                              class="Pagination__Item Pagination__Item--Next"
+                                              href="{{ paginate.previous.url }}"
+                                      >
+                                          Previous
+                                      </a>
+                                  </div>
+                              {%- endif -%}
+
+                              {%- for part in paginate.parts -%}
+                                  <div>
+                                      {%- if part.is_link -%}
+                                          <a
+                                                  class="Pagination__Item"
+                                                  href="{{ part.url }}"
+                                          >
+                                              {{ part.title }}
+                                          </a>
+                                      {%- else -%}
+                                          {%- if part.title == paginate.current_page -%}
+                                              <span class="Pagination__Item Pagination__Item--Current" style="color: #395dcc;font-weight: bolder; font-family: Montserrat,sans-serif">{{ part.title }}</span>
+                                          {%- else -%}
+                                              <span class="Pagination__Item" style=";
+    border: 1px solid #421010;">{{ part.title }}</span>
+                                          {%- endif -%}
+                                      {%- endif -%}
+                                  </div>
+                              {%- endfor -%}
+
+                              {%- if paginate.next -%}
+                                  <div>
+                                      <a
+                                              class="Pagination__Item Pagination__Item--Prev"
+                                              href="{{ paginate.next.url }}"
+                                      >
+                                          Next
+                                      </a>
+                                  </div>
+                              {%- endif -%}
+                          </div>
+                      </nav>
+
+                  </div>
+              {% endif %}
+          {% endpaginate %}
+      </section>
+</section>
+<style>
+  .Pagination__List{
+    display: flex;
+    max-width: 60%;
+    width: 40%;
+    gap: 5%;
+  }
+  .Pagination__List div{
+    flex: 1 10%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+  @media screen and (min-width: 915px){
+      .cntnr{
+          margin-top: 3%;
+          flex: 1 28%
+      }
+  }
+  @media screen and (max-width: 915px){
+      .cntnr{
+          margin-top: 3%;
+          flex: 1 60%
+      }
+  }
+  .Pagination__List a{
+    text-decoration: none;
+    color: black;
+    font-family: Montserrat,sans-serif;
+  }
+  @keyframes pan {
+    0%{
+      transform: translateX(0);
+    }
+    49%{
+      transform: translateX(2rem);
+      opacity: 0;
+    }
+    51%{
+      transform: translateX(-2rem);
+      opacity: 0;
+    }
+    100%{
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  .right:hover p{
+    animation: pan 0.4s;
+  }
+  .left:hover p{
+    animation: pan 0.4s reverse;
+  }
+  .right:hover, .left:hover{
+    background-color: #2F0C16;
+    color: white;
+  }
+  .right, .left{
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .title-p h1:hover{
+    color: #451b63d6;
+  }
+  .title-p h1{
+    transition: 0.5s ease;
+  }
+  .qadd{
+    background-color: #130c0c;
+    border-radius: 50%;
+    color: white;
+    border: 0;
+    width: 2rem;
+    height: 2rem;
+    opacity: 0;
+    transform: rotateZ(-65deg);
+    cursor: pointer;
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out, color 0.1s ease-out, background-color 0.1s ease-out;
+  }
+  .qanchor:hover .qadd{
+    opacity: 1;
+    transform: rotateZ(0deg);
+  }
+  .qadd:active{
+    color: black;
+    background-color: white;
+  }
+  .qanchor img{
+    transition: 0.25s ease-out;
+  }
+  .qanchor:hover img{
+    transform: scale(1.1);
+  }
+</style>
+{% section 'Count-down'%}

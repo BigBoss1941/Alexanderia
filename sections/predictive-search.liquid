@@ -1,0 +1,28 @@
+{%- if predictive_search.performed -%}
+    <div style="z-index: 2;box-shadow: 1px 10px 20px 5px rgba(168,167,167,0.4);padding-top: 1rem;display: flex;flex-direction: row; padding-left: 1rem;background-color: #eae9e9;font-family: Montserrat,sans-serif;" id="predictive-search-results">
+        {%- if predictive_search.resources.products.size > 0 -%}
+            <h3 style="flex: 1 20%;padding-top: 1rem;width:20%;text-align: center; border-right: 1px solid #dadada" id="predictive-search-products">
+                Products
+            </h3>
+            <ul style="flex: 1 80%;list-style: none" role="listbox" aria-labelledby="predictive-search-products">
+                {%- for product in predictive_search.resources.products -%}
+                    <li role="option">
+                        <a style="text-align: center; display: flex" href="{{ product.url }}">
+                            <div style="flex: 1 20%;">
+                                <img style=" height: 15vmin;width: 40%;object-fit: contain" src="{{ product | image_url: width: 100  }}" alt="">
+                            </div>
+                            <div style="display: flex;flex: 1 80%;height: 15vmin; justify-content: center; align-items: center">
+                                <span class="togo" style="height: 100%; display: flex; align-items: center; color: black">{{ product.title }}</span>
+                            </div>
+                        </a>
+                    </li>
+                {%- endfor -%}
+            </ul>
+        {%- endif -%}
+    </div>
+{%- endif -%}
+<style>
+    .togo, .togo:visited, .togo:hover,.togo:active{
+        text-decoration: none;
+    }
+</style>

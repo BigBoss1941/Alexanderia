@@ -1,0 +1,77 @@
+{% section 'front'%}
+{% section 'bestseller'%}
+
+{% section 'newbest'%}
+{% section 'Count-down'%}
+{% section 'comparator'%}
+{% section 'fabric'%}
+{% section 'front-slider'%}
+{% section 'ending'%}
+<style>
+    #fabric{
+        order: 3;
+    }
+    #d1{
+        order: 4 !important;
+    }
+    .secfr{
+        order: 1 !important;
+    }
+  .contained .index{
+      background-color: black;
+  }
+  .index .menu_dropdown_container a{
+      color: white;
+  }
+  .contained .hdm{
+      transition: 1s ease;
+  }
+  .contained .front{
+      background-color: rgb(15, 15, 15);
+  }
+    .front .mob svg{
+        filter: invert(99%) sepia(1%) saturate(1867%) hue-rotate(58deg) brightness(116%) contrast(100%);
+    }
+  .front button img{
+      filter: invert(99%) sepia(1%) saturate(1867%) hue-rotate(58deg) brightness(116%) contrast(100%);
+  }
+  .front button{
+      background-color: black;
+  }
+  .front{
+      background-color: black;
+  }
+  .front .controls img{
+      filter: invert(99%) sepia(1%) saturate(1867%) hue-rotate(58deg) brightness(116%) contrast(100%);
+  }
+  .contained .front a{
+      color: white;
+
+  }
+  .front .logo img{
+      filter: invert(94%) sepia(100%) saturate(1%) hue-rotate(117deg) brightness(104%) contrast(100%);
+  }
+</style>
+<script>
+    const main_page = document.querySelector(".hdm");
+    document.addEventListener('scroll', () => {
+        if (window.scrollY === 0){
+            if(main_page.classList.contains("front")){
+                console.log("nice")
+            }
+            else {
+                main_page.classList.add("front")
+                document.querySelector("#sbar").classList.add("front")
+            }
+        }
+        else if (window.scrollY > 0){
+            main_page.classList.remove("front");
+            document.querySelector("#sbar").classList.remove("front")
+        }
+
+    })
+    console.log('hi');
+
+</script>
+
+

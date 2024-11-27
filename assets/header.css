@@ -1,0 +1,116 @@
+@media (max-width: 912px){
+
+    .menu_dropdown_container a{
+        display: none!important;
+    }
+    .mob{
+        display: contents!important;
+    }
+    .mob svg{
+        margin-left: 0;
+    }
+}
+*{
+    margin: 0 auto;
+    -webkit-font-smoothing: antialiased;
+}
+.contained{
+}
+
+.at_first{
+    z-index: 6;
+}
+.menu_dropdown_container{
+    display: flex;
+    flex-direction: row;
+    flex: 1 30%;
+    align-items: center;
+    height: 100%;
+    margin-left: 3%;
+    flex-wrap: nowrap;
+}
+.menu_dropdown_container a{
+    margin-right: 6%;
+    margin-left: 0;
+    text-decoration: none;
+    color: black;
+    font-family: Univers, sans-serif;
+    text-align: center;
+    letter-spacing: 3px;
+    font-weight: 500;
+    height: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    font-size: 0.8em;
+    z-index: 41;
+
+}
+.menu_dropdown_container a:before{
+    content: "";
+    position: absolute;
+    width: 130%;
+    bottom: -59%;
+    height: 3px;
+    border-radius: 5px;
+    background: #2F0C16;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s ease;
+}
+.menu_dropdown_container a:hover:before{
+    transform-origin: left;
+    transform: scaleX(1);
+}
+.hdm{
+    display: flex;
+    font-size: 14px;
+    height: 9vh;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    background-color: white;
+
+}
+@media (min-width: 915px) {
+    .controls{
+        display: flex;
+        flex: 1 10%;
+        height: 100%;
+        align-items: center;
+        justify-content: right;
+        margin-right: -2%;
+    }
+    .logo{
+        flex: 1 40%; display: flex; justify-content: center; position: relative
+    }
+}
+@media (max-width: 915px) {
+    .controls{
+        display: flex;
+        flex: 1 20%;
+        height: 100%;
+        align-items: center;
+        justify-content: right;
+        flex-direction: row;
+        margin-right: -2%;
+    }
+    .logo{
+        flex: 1 30%; display: flex; justify-content: center; position: relative
+    }
+}
+.controls a{
+    width: 1.7em;
+    height: 1.7em;
+}
+
+.inside{
+    display: flex;
+    justify-content: space-around;
+    width: 95%;
+    height: 50%;
+    column-gap: 1%;
+    position: sticky;
+    margin-left: 0;
+}

@@ -1,0 +1,154 @@
+<link href="{{'search.css' | asset_url}}" rel="stylesheet"/>
+<div class="contained at_first" style="position: fixed;z-index: 31; top: 0;height: 9vh">
+    <header class="hdm front" style="z-index: 32; position: relative">
+
+        <div class="inside">
+            <div class="menu_dropdown_container">
+                {% for link in linklists.main-menu.links %}
+                    {% assign child_list_handle = link.title | handleize %}
+                    {% if linklists[child_list_handle].links != blank %}
+                        <a href="{{ link.url }}">{{ link.title }}</a>
+                        [{% for childlink in linklists[child_list_handle].links %}
+                        <a href="{{ childlink.url }}">{{ childlink.title | escape | upcase }}</a>
+                    {% endfor %}]
+                    {% else %}
+                        <a href="{{ link.url }}">{{ link.title | upcase }}</a>
+                    {% endif %}
+                {% endfor %}
+                <div class="mob" style="display: none">
+                    <svg aria-hidden="true" fill="none" focusable="false" width="24" class="header__nav-icon icon icon-hamburger" viewBox="0 0 24 24">
+                        <path d="M1 19h22M1 12h22M1 5h22" stroke="currentColor" stroke-width="1" stroke-linecap="square"></path>
+                    </svg>
+                </div>
+
+            </div>
+            <div style="" class="logo">
+                <a style="position: absolute;right: 70%;top: 0; height: 9vh" href="/index"><img draggable="false" style=";height: 60%" src="{{'logo.png' | asset_url}}" alt=""></a>
+            </div>
+
+            <div class="controls">
+
+                {% if customer %}
+                    <a style="width: 1.7em" href="/account">
+                        <img src="{{ 'icon-member.svg' | asset_url}}" alt=""/>
+                    </a>
+
+                    {{ 'log out'  | customer_logout_link }}
+                {% else %}
+
+                    <a  href="/account/login">
+                        <img src="{{ 'icon-member.svg' | asset_url}}" alt=""/>
+                    </a>
+                    <a id="isearch" href="/search">
+                        <img src="{{ 'search.svg' | asset_url}}" alt=""/>
+                    </a>
+                    <a href="/cart">
+                        <img src="{{ 'cart.svg' | asset_url}}" alt=""/>
+                    </a>
+
+
+
+                {% endif %}
+            </div>
+        </div>
+
+    </header>
+
+    <section id="sbar" class="undrawed">
+        <div class="top-bar__search">
+            <div class="search-drawer-box">
+                <div class="search-input">
+                    <predictive-search>
+                        <form style="z-index: 3;" action="{{ routes.search_url }}" method="get" role="search">
+                           <div style="display: flex; flex-direction: row; align-items: center; height: 9vh; width: 99%">
+                               <input  style="padding-left: 1rem;width: 93%; padding-top: 0.5rem; padding-bottom: 0.5rem; margin-left: 1rem"
+                                       id="Search"
+                                       type="search"
+                                       name="q"
+                                       value="{{ search.terms | escape }}"
+                                       role="combobox"
+                                       aria-expanded="false"
+                                       aria-owns="predictive-search-results"
+                                       aria-controls="predictive-search-results"
+                                       aria-haspopup="listbox"
+                                       aria-autocomplete="list"
+                                       required
+                               >
+                               <button style="width: 3%; border: 0" type="submit" class="search-bar__submit">
+                                   <img style="display: flex;align-items: center;height: 100%;width: 100%" src="{{ 'search.svg' | asset_url}}" alt=""/>
+                               </button>
+                           </div>
+                            <input name="options[prefix]" type="hidden" value="last">
+
+                            <div id="predictive-search" tabindex="-1"></div>
+                        </form>
+                    </predictive-search>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</div>
+<script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
+
+
+
+
+
+<style>
+    .mob{
+        cursor: pointer;
+    }
+    .mob:active svg{
+        transform: scale(0.9);
+    }
+    .mob:hover svg{
+        filter: invert(18%) sepia(90%) saturate(2112%) hue-rotate(345deg) brightness(80%) contrast(92%);
+        transition: 0.3s ease;
+    }
+    #sbar {
+        width: 100%;
+        height: 9vh;
+        z-index: 31;
+        position: relative;
+
+    }
+    #Search:focus{
+        outline: 0;
+        border: 2px solid #6b1640;
+    }
+    .undrawed{
+        opacity: 0;
+        transform: translateY(-9vh);
+        transition: 0.7s ease;
+    }
+    .drawed{
+        opacity: 1;
+        transform: translateY(0);
+        transition: 0.4s ease;
+        background-color: white;
+    }
+    .drawed button{
+        background-color: white;
+    }
+    .drawed button:hover {
+        background-color: #bdbcbc;
+        cursor: pointer;
+    }
+</style>
+<script>
+    const search = document.querySelector('#isearch');
+    search.addEventListener("click",e => {
+        e.preventDefault();
+        if (document.querySelector("#sbar").classList.contains("undrawed")){
+            document.querySelector("#sbar").classList.remove("undrawed");
+            document.querySelector("#sbar").classList.add("drawed");
+        }
+        else{
+            document.querySelector("#sbar").classList.add("undrawed");
+            document.querySelector("#sbar").classList.remove("drawed");
+        }
+    })
+</script>
+
+

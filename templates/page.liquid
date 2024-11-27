@@ -1,0 +1,259 @@
+
+
+<section style="height: 75vmin;position: relative">
+    <img style=";width: 100%;height: 100%; object-fit: cover" src="{{'about-header.jpg' | asset_url }}" alt="">
+    <div style="position: absolute;width: 100%;height: 100%;z-index: 1; background-color: rgba(102,51,153,0.2);top: 0 "></div>
+    <div style="position: absolute;top: 0;z-index: 2; width: 100%;height: 100%; display: flex; align-items: center;justify-content: center;flex-direction: column">
+        <h2 style="font-family: Montserrat,sans-serif; color: white;text-transform: uppercase; font-size: 1em;font-weight: lighter">From Sahlal shop</h2>
+        <h1 style="font-family: Montserrat,sans-serif; color: white;text-transform: uppercase; font-size: 2.5em;font-weight: bold">{{ page.title }}</h1>
+    </div>
+</section>
+
+
+<section class="first-sec" style="height: 100vh; display: flex; ;padding-top: 7rem">
+    <div class="div-prnt" style="position: relative ; flex: 1 50%">
+        <div class="i-div" style="">
+            <img style="width: 100%;height: 100vmin;object-fit: cover;" src="{{'about-us1.jpg' | asset_url }}" alt="">
+        </div>
+
+    </div>
+    <div style="flex: 1 50%; font-family: Montserrat,sans-serif">
+        <h2 style="width: 50%;margin-top: 5%;margin-bottom: 5%; font-size: 0.9em; font-weight: lighter">Behind the fire</h2>
+        <h1 style="width: 50%;margin-bottom: 5%;text-transform: uppercase">who we are?</h1>
+        <p class="first-p" style="width: 50%;; margin-top: 15%">We have travelled around the world, studying the arts of the textile,
+            We created this brand together, building on the experienced we gained along the way.
+            Our aim has always remained the same: <span style="color: rebeccapurple">to offer elegant, timeless and functional products.</span></p>
+    </div>
+
+</section>
+
+
+<section style="height: 200vh; margin-top: 15vh;overflow: clip">
+    <div style="width: 100%; height: 50%;position: sticky;top: 9vh;">
+        <img style="z-index: 0;transform: scale(1.1);width: 100%; height: 100vh;filter:contrast(90%)brightness(60%)blur(0.8rem)saturate(80%);object-fit: cover" src="{{ 'text-scroll-bckgr.jpg' | asset_url }}" alt="">
+
+    </div>
+    <div class="scroll-grid">
+        <div style="height: 70vmin;width: 50%;position: sticky; top: 10%; padding-top: 4rem">
+            <div style="width: 100%; height: 100%;position: relative">
+                <img class="g1" style="width: 100%; height: 100%;position: absolute;top: 0" src="{{'gamme.jpg' | asset_url }}" alt="">
+                <img class="g2" style="opacity: 0;width: 100%; height: 100%;position: absolute;top: 0" src="{{'gamme-2.jpg' | asset_url }}" alt="">
+            </div>
+        </div>
+        <div class="scrollable-text t1">
+            <div style="display: flex;
+            align-items: center;
+            justify-content: center;flex-direction: column; gap: 10%; height: 100vh">
+                <h2 style="font-size: 1em; font-weight: lighter">Step 1</h2>
+                <h1 style="font-size: 1.7em;text-transform: uppercase">creation</h1>
+                <p>One must seek ingenuity before all. Our studio takes care of the drawings and our workshops Around the world accompany us in the development of the Dresses and outfits.</p>
+            </div>
+        </div>
+        <img style="opacity: 0;height: 70vmin;width: 50%;position: sticky; top: 10%;padding-top: 4rem; padding-bottom: 4rem" src="{{'gamme-2.jpg' | asset_url }}" alt="">
+        <div class="scrollable-text t2">
+            <div style="display: flex;
+            align-items: center;
+            justify-content: center;flex-direction: column; gap: 10%; height: 100vh">
+                <h2 style="font-size: 1em; font-weight: lighter">Step 2</h2>
+                <h1 style="font-size: 1.7em;text-transform: uppercase">continuation</h1>
+                <p>The privilege of the knowledgable is to share his expertise towards the path of perfectionism. we consult our partners and check if we're able to create and optimise the design.</p>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</section>
+<script>
+    let callback = (entries, observer) => {
+        entries.forEach((entry) => {
+            entry.target.style.opacity = entry.intersectionRatio
+        });
+    };
+
+    let options = {
+        root: null,
+        threshold: [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
+    }
+    let observer = new IntersectionObserver(callback, options);
+
+    for (const target of document.querySelectorAll('.scrollable-text')) {
+        observer.observe(target);
+    }
+    window.addEventListener("scroll", ev => {
+        if(document.querySelector(".t1").style.opacity <= 0.2){
+            document.querySelector(".g2").style.opacity = "1";
+        }
+        else{
+            document.querySelector(".g2").style.opacity = "0";
+        }
+    })
+</script>
+<section id="followme" class="first-sec" style="height: 100vh; display: flex; ;padding-top: 7rem;background-color: #030001; color: white">
+
+    <div style="flex: 1 50%; font-family: Montserrat,sans-serif;padding-top: 10%">
+        <h1 style="width: 50%;margin-bottom: 5%;text-transform: uppercase">Quality Matters Most</h1>
+        <p class="another-p" style="width: 50%;; margin-top: 15%">We strive to always achieve more and do better, and for that reason, if any of our sizes do not sut you, we can always deliver  <span style="color: rebeccapurple">custom orders for no additional costs.</span></p>
+    </div>
+    <div class="div-prnt" style="position: relative ; flex: 1 50%">
+        <div class="i-div" style="">
+            <img style="width: 100%;height: 100vmin;object-fit: cover;" src="{{'second-about-us.jpg' | asset_url }}" alt="">
+        </div>
+
+    </div>
+
+</section>
+<div>{{ page.content }}</div>
+<script>
+    const main_page = document.querySelector(".hdm");
+    let target1 = document.querySelector("#followme");
+    function darken() {
+        let windowHeight = window.innerHeight;
+        let elementTop = target1.getBoundingClientRect().top;
+        let elementVisible = 600;
+
+        if (elementTop < windowHeight - elementVisible) {
+            if(main_page.classList.contains("front")){
+
+            }
+            else {
+                main_page.classList.add("front")
+                document.querySelector("#sbar").classList.add("front")
+            }
+
+        }
+        else{
+            main_page.classList.remove("front");
+            document.querySelector("#sbar").classList.remove("front")
+
+        }
+    }
+
+    window.addEventListener("scroll", darken);
+
+</script>
+<style>
+    .g2{
+        transition: opacity 0.5s ease-out;
+    }
+    @media screen and (min-width: 915px){
+        .scroll-grid{
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            grid-column-gap: 0;
+            grid-row-gap: 0;
+            margin-top: -50%;
+        }
+        .scrollable-text{
+            z-index: 2;
+            height: 50%;
+            display: flex;
+            flex-flow: row;
+            position: relative;
+            color: white;
+            font-family: Montserrat,sans-serif;
+        }
+        .scrollable-text p{
+            width: 60%;
+        }
+        .scrollable-text:nth-child(2){
+
+
+        }
+
+        .scrollable-text img{
+            width: 50%;
+            margin-top: 5%;
+            height: 80%;
+            object-fit: contain;
+            z-index: 2;
+            position: absolute;
+        }
+        .first-sec{
+            flex-direction: row
+        }
+        .first-p{
+            font-size: 1.85em
+        }
+        .i-div{
+            width: 90%;position: absolute; top: 0;right: 1%
+        }
+        .another-p{
+            font-size: 1.2em;
+            line-height: 1.8em;
+        }
+    }
+    @media screen and (max-width: 915px){
+        .first-sec{
+            flex-direction: column;
+        }
+        .i-div{
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .i-div img{
+            height: 100%;
+        }
+        .first-p{
+            font-size: 1.1em;
+            width: 100%;
+        }
+        .div-prnt{
+            width: 100%;
+        }
+    }
+</style>
+<style>
+    #fabric{
+        order: 3;
+    }
+    #d1{
+        order: 4 !important;
+    }
+    .secfr{
+        order: 1 !important;
+    }
+    .contained .index{
+        background-color: black;
+    }
+    .index .menu_dropdown_container a{
+        color: white;
+    }
+    .contained .hdm{
+        transition: 1s ease;
+    }
+    .contained .front{
+        background-color: #030001;
+
+
+
+
+    }
+    .front .mob svg{
+        filter: invert(99%) sepia(1%) saturate(1867%) hue-rotate(58deg) brightness(116%) contrast(100%);
+    }
+    .front button img{
+        filter: invert(99%) sepia(1%) saturate(1867%) hue-rotate(58deg) brightness(116%) contrast(100%);
+    }
+    .front button{
+        background-color: black;
+    }
+    .front{
+        background-color: black;
+    }
+    .front .controls img{
+        filter: invert(99%) sepia(1%) saturate(1867%) hue-rotate(58deg) brightness(116%) contrast(100%);
+    }
+    .contained .front a{
+        color: white;
+
+    }
+    .front .logo img{
+        filter: invert(94%) sepia(100%) saturate(1%) hue-rotate(117deg) brightness(104%) contrast(100%);
+    }
+</style>

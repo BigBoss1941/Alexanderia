@@ -1,0 +1,921 @@
+<link href="{{ 'splide.min.css' | asset_url}}" rel="stylesheet">
+<section class="prod-sec" style="scroll-behavior: smooth">
+        {% assign current_variant = product.selected_or_first_available_variant %}
+        {% assign featured_image = current_variant.featured_image | default: product.featured_image %}
+    <section class="slider" style="flex: 1 70%; display: flex; gap: 1%">
+
+        <div style="flex: 1 10%; position: sticky;top: 9vh;align-self: flex-start;" class="content_container">
+            <ul style="position: relative" class="ul">
+                {% assign count = 1 %}
+                {% for image in product.images %}
+                    {% assign z = product.images.first %}
+
+                    {% if count ==  1 %}
+                        <li style="display: flex; flex-direction: column">
+                            <a  class="set" href="#{{ image.id }}">
+                                <img id="R{{ image.id }}" class="current" draggable="false" src="{{ image.src | img_url: 'compact' }}" alt="{{ image.alt | escape }}">
+                            </a>
+                            <span style="width: 1px; height: 25px; background: linear-gradient(white, #75163a, white)"></span>
+                        </li>
+                        {% capture count %}{{ count | plus:1 }}{% endcapture %}
+
+                    {% else if count <  product.images.size %}
+                        <li style="display: flex; flex-direction: column">
+                            <a class="set" href="#{{ image.id }}">
+                                <img id="R{{ image.id }}" draggable="false"  src="{{ image.src | img_url: 'compact' }}" alt="{{ image.alt | escape }}">
+                            </a>
+                            {% if image == product.images.last %}
+                             {% else %}
+                                 <span style="width: 1px; height: 25px; background: linear-gradient(white, black, white)"></span>
+                            {% endif%}
+                        </li>
+                        {% capture count %}{{ count | plus:1 }}{% endcapture %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+<style>
+    .set img{
+        width: 6vmin;
+        height: 8vmin;
+        border-radius: 3rem;
+        object-fit: cover;
+        border: 1px solid rgba(103,20,43,0.1);
+        transition: 0.4s ease;
+    }
+    .set .current{
+        width: 7.6vmin;
+        height: 12.8vmin;
+        border-radius: 1rem;
+    }
+</style>
+        {% assign slide = 1 %}
+        <div class="slides" style="flex: 1 90%; scrollbar-width: none;">
+            {% for image in product.images %}
+                {% assign min = 1 %}
+                {% assign max = 80 %}
+                {% assign diff = max | minus: min %}
+                {% assign randomNumber = "now" | date: "%N" | modulo: diff | plus: min %}
+                <div class="slide"  style="margin-top: 20px">
+                    <div class="inner_content" style="position: relative">
+                        {% if slide %}
+                                <div class="parlx" style="position: absolute;top: 400px;right: {{ randomNumber }}%; background-color: rgba(45, 16, 106, 0.36); width: 40%;padding-top: 10%; padding-bottom: 10%;z-index: 2; text-align: center; border-radius: 2em;color: white">
+                                    <p style="font-family: Montserrat,sans-serif; width: 90%">{{ image.alt | escape }}</p>
+                                </div>
+
+                            {% capture slide %}{{ slide | plus:1 }}{% endcapture %}
+                        <img draggable="false" id="{{ image.id }}" src="{{ image | img_url: 'master' }}" alt="{{ featured_image.alt | escape }}">
+                    </div>
+                </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </section>
+    <section style="padding-bottom: 4rem" class="splide" id="s3" aria-labelledby="carousel-heading">
+        <div class="splide__arrows">
+            <div class="lefta splide__arrow--prev" style="position: absolute"><p><</p></div>
+            <div class="righta splide__arrow--next" style="position: absolute"><p>></p></div>
+        </div>
+
+        <div class="splide__track ">
+            <ul class="splide__list">
+                {% for image in product.images %}
+                    {% assign current_variant = product.selected_or_first_available_variant %}
+                    <div class=" splide__slide" id="sli{{forloop.index}}" style="">
+                        <img style="height: 90%; width: 100%; object-fit: contain" draggable="false" id="{{ image.id }}" src="{{ image | img_url: 'master' }}" alt="{{ featured_image.alt | escape }}">
+                    </div>
+                {% endfor %}
+            </ul>
+        </div>
+
+
+    </section>
+    <style>
+        @keyframes pan {
+            0%{
+                transform: translateX(0);
+            }
+            49%{
+                transform: translateX(2rem);
+                opacity: 0;
+            }
+            51%{
+                transform: translateX(-2rem);
+                opacity: 0;
+            }
+            100%{
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .righta:hover p{
+            animation: pan 0.4s;
+        }
+        .lefta:hover p{
+            animation: pan 0.4s reverse;
+        }
+        .righta:hover, .lefta:hover{
+            background-color: #2F0C16;
+            color: white;
+        }
+        .righta, .lefta{
+            transition: background-color 0.3s ease, color 0.3s ease;
+            z-index: 2;
+            top: 50%;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            background-color: white;
+            box-shadow: 0 .125rem .625rem rgb(213, 212, 212);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6em;
+            font-weight: lighter;
+            position: absolute;
+            cursor: pointer;
+        }
+    </style>
+
+    <div class="right reveal" style="">
+        <div class="right-cont">
+            <h1>{{ product.title }}</h1>
+            <h2>{{ current_variant.price | money }} {{shop.currency}}</h2>
+            <span style="background-color: #2F0C16; height: 1px; width: 90%; margin-bottom: 4rem; margin-left: 0.5%"></span>
+            <form style="width: 100%" action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm">
+                <div class="selecting">
+                    <select style="" class="select" name="id" id="productSelect">
+                        <div class="arrow">
+                            <img style="width: 5%; height: 5%" src="{{ 'down.svg' | asset_url }}" alt="" class="">
+                        </div>
+                        {% for variant in product.variants %}
+                            {% if variant.available %}
+                                <option value="{{ variant.id }}">
+                                    {{ variant.title }} - {{ variant.price | money }} {{shop.currency}}
+                                </option>
+
+                            {% else %}
+                                <option disabled="disabled">
+                                    {{ variant.title }} - sold out
+                                </option>
+                            {% endif %}
+                        {% endfor %}
+
+                    </select>
+
+                    {% if current_variant.available %}
+                        <div class="availability"><span style="                            background-color: #0f8064;
+                            border-radius: 50%;
+                            height: 1rem;
+                            left: -1.5rem;
+                            width: 1rem;position: absolute"></span>{{current_variant.inventory_quantity}} available</div>
+                    {% else %}
+                        <div class="availability"><span style="                            background-color: #910f0f;
+                            border-radius: 50%;
+                            height: 1rem;
+                            left: -1.5rem;
+                            width: 1rem;position: absolute"></span>Sold out</div>
+                    {% endif %}
+                    <style>
+                        .availability{
+                            position: absolute;
+                            left: 2.5rem;
+                            margin-top: 2rem;
+                            font-family: Montserrat,sans-serif;
+                        }
+                    </style>
+
+
+
+                </div>
+
+                <div style="padding-top: 2rem" class="description">{{ product.description }}</div>
+                <div style="height: 2em;width: 70%; margin-left: 0 " class="icon-and-text">
+
+                              <span style="margin: 0;display: flex;align-items: center;font-family: Montserrat,sans-serif"> <svg style="margin: 0;display: flex;align-items: center;height: 3vmin; width: 10%" aria-hidden="true" focusable="false" viewBox="0 0 64 64"><defs><style>.a{fill:none;stroke:#000;stroke-width:2px}</style></defs><circle class="a" cx="32" cy="32" r="22"></circle><path class="a" d="M13 21h38M10 32h44M13 43h38M32 10c-12 8-12 37 0 44m0-44c12 8 12 37 0 44"></path></svg>
+Free worldwide shipping<br></span>
+                </div>
+                <input type="number" id="Quantity" name="quantity" value="1" min="1" hidden>
+                <button class="addtocart" style="text-transform: uppercase; cursor: pointer" type="submit" name="add" id="AddToCart">Add to cart</button>
+                <script type=”text/javascript” src=”https://inkybay.com/shopify/js/inkybay.js?shop=[STORE].myshopify.com”></script>
+            </form>
+            <div class="social-sharing"><a target="_blank" rel="noopener" href="" class="social-sharing__link" title="Share on Facebook">
+                    <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-facebook" viewBox="0 0 14222 14222"><path d="M14222 7112c0 3549.352-2600.418 6491.344-6000 7024.72V9168h1657l315-2056H8222V5778c0-562 275-1111 1159-1111h897V2917s-814-139-1592-139c-1624 0-2686 984-2686 2767v1567H4194v2056h1806v4968.72C2600.418 13603.344 0 10661.352 0 7112 0 3184.703 3183.703 1 7111 1s7111 3183.703 7111 7111Zm-8222 7025c362 57 733 86 1111 86-377.945 0-749.003-29.485-1111-86.28Zm2222 0v-.28a7107.458 7107.458 0 0 1-167.717 24.267A7407.158 7407.158 0 0 0 8222 14137Zm-167.717 23.987C7745.664 14201.89 7430.797 14223 7111 14223c319.843 0 634.675-21.479 943.283-62.013Z"></path></svg>
+                    <span class="social-sharing__title" aria-hidden="true">Share</span>
+                </a><a target="_blank" rel="noopener" href="" class="social-sharing__link" title="Tweet on Twitter">
+                    <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-twitter" viewBox="0 0 32 32"><title>twitter</title><path fill="#444" d="M31.281 6.733q-1.304 1.924-3.13 3.26 0 .13.033.408t.033.408q0 2.543-.75 5.086t-2.282 4.858-3.635 4.108-5.053 2.869-6.341 1.076q-5.282 0-9.65-2.836.913.065 1.5.065 4.401 0 7.857-2.673-2.054-.033-3.668-1.255t-2.266-3.146q.554.13 1.206.13.88 0 1.663-.261-2.184-.456-3.619-2.184t-1.435-3.977v-.065q1.239.652 2.836.717-1.271-.848-2.021-2.233t-.75-2.983q0-1.63.815-3.195 2.38 2.967 5.754 4.678t7.319 1.907q-.228-.815-.228-1.434 0-2.608 1.858-4.45t4.532-1.842q1.304 0 2.51.522t2.054 1.467q2.152-.424 4.01-1.532-.685 2.217-2.771 3.488 1.989-.261 3.619-.978z"></path></svg>
+                    <span class="social-sharing__title" aria-hidden="true">Tweet</span>
+                </a><a target="_blank" rel="noopener" href="" class="social-sharing__link" title="Pin on Pinterest">
+                    <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-pinterest" viewBox="0 0 256 256"><path d="M0 128.002c0 52.414 31.518 97.442 76.619 117.239-.36-8.938-.064-19.668 2.228-29.393 2.461-10.391 16.47-69.748 16.47-69.748s-4.089-8.173-4.089-20.252c0-18.969 10.994-33.136 24.686-33.136 11.643 0 17.268 8.745 17.268 19.217 0 11.704-7.465 29.211-11.304 45.426-3.207 13.578 6.808 24.653 20.203 24.653 24.252 0 40.586-31.149 40.586-68.055 0-28.054-18.895-49.052-53.262-49.052-38.828 0-63.017 28.956-63.017 61.3 0 11.152 3.288 19.016 8.438 25.106 2.368 2.797 2.697 3.922 1.84 7.134-.614 2.355-2.024 8.025-2.608 10.272-.852 3.242-3.479 4.401-6.409 3.204-17.884-7.301-26.213-26.886-26.213-48.902 0-36.361 30.666-79.961 91.482-79.961 48.87 0 81.035 35.364 81.035 73.325 0 50.213-27.916 87.726-69.066 87.726-13.819 0-26.818-7.47-31.271-15.955 0 0-7.431 29.492-9.005 35.187-2.714 9.869-8.026 19.733-12.883 27.421a127.897 127.897 0 0 0 36.277 5.249c70.684 0 127.996-57.309 127.996-128.005C256.001 57.309 198.689 0 128.005 0 57.314 0 0 57.309 0 128.002Z"></path></svg>
+                    <span class="social-sharing__title" aria-hidden="true">Pin it</span>
+                </a></div>
+
+        </div>
+    </div>
+
+    <style>
+        #s3{
+            width: 100%;
+        }
+    @keyframes revealing {
+        from{
+            opacity: 0;
+            transform: translateX(50%);
+        }
+        to{
+            opacity: 1;
+        }
+
+    }
+    .reveal{
+        animation: revealing 0.8s ease;
+    }
+    .social-sharing svg{
+        width: 2vmin;
+
+    }
+
+    .social-sharing a{
+        color: black;
+        text-decoration: none;
+        font-family: Montserrat,sans-serif;
+        font-size: 0.9em;
+    }
+    .visually-hidden{
+        opacity: 0;
+    }
+    @media (max-width: 915px) {
+        .trgt{
+            margin-top: 2rem;
+            display: flex; flex-direction: column;
+        }
+        .slider{
+            flex-direction: column;
+        }
+        .slides{
+            display: none;
+        }
+        .right{
+            background-color: #EFEFEF; flex: 1 35%;
+            align-self: flex-start; height: 100vh
+        }
+        .prod-sec{
+            background-color: #EFEFEF;
+            gap: 5%;
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 2%;
+        }
+        .content_container{
+            display: none;
+        }
+        .right-cont{
+            margin-left: 5%;
+        }
+        .right-cont .description{
+            width: 100%;
+        }
+        .addtocart{
+            margin-left: 10%;
+        }
+        .social-sharing{
+            display: flex;
+            width: 100%;
+            margin-left: 0;
+            margin-top: 3rem;
+        }
+        .parallax-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-family: Montserrat, sans-serif;
+        }
+        .visit img{
+            object-fit: cover;height: 100%; width: 100%;
+        }
+        .img{
+            flex: 1 30%
+        }
+        .high2{
+            opacity: 0;
+        }
+        .parallax-item:first-child {
+            background-image: url("{{ 'tailor1.jpg' | asset_url }}");
+            background-repeat: no-repeat;
+            background-position: 0 -510px;
+            background-size: 640px 530px;
+        }
+
+    }
+    @media (min-width: 915px) {
+        .parallax-item:first-child {
+            background-image: url("{{ 'tailor1.jpg' | asset_url }}");
+            background-repeat: no-repeat;
+            background-position: 0 -510px;
+            background-size: cover;
+        }
+        #s3{
+            display: none;
+        }
+        .img{
+            flex: 1 50%
+        }
+        .visit img{
+            object-fit: cover;height: 101%; width: 100%;
+        }
+        .parallax-item.trgt{
+            display: flex; flex-direction: row;
+        }
+        .social-sharing{
+            display: flex;
+            width: 80%;
+            margin-left: 0;
+            margin-top: 3rem;
+        }
+        .right{
+            background-color: #EFEFEF; flex: 1 35%;position: sticky;
+            top: 9vh;
+            align-self: flex-start; height: 100vh
+        }
+        .prod-sec{
+            background-color: #EFEFEF;
+            gap: 5%;
+            display: flex;
+            padding-bottom: 2%;
+        }
+        .parallax-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-family: Montserrat, sans-serif;
+            width: 100%;
+            min-height: 100vh;
+        }
+    }
+</style>
+</section>
+<style>
+    @media screen and (min-width: 915px) {
+        .mim{
+            padding-top: 1rem;display: flex;flex-direction: column; background-color: rgba(47,12,22,0.4); width: 40%;border-radius: 1em; height: 30vmin;
+
+        }
+        .texts p{
+            width: 80%;line-height: 1.5em
+        }
+        .texts{
+        width: 40%
+        }
+        .high{
+            background-color: white;
+            color: #2F0C16;
+            display: flex;
+            width: 30%;
+            flex-direction: column;
+            padding-bottom: 3rem;
+            position: sticky;
+            top: 45%;
+            margin-right: 20%;
+            margin-top: -35%;
+            border: 1px solid black;
+        }
+        .high h2{
+            font-family: Montserrat,sans-serif;
+            font-weight: bolder;
+
+        }
+        .high p{
+            width: 80%;
+            color: teal;
+            height: 60%;
+            line-height: 1.1em;
+            letter-spacing: 0.1em;
+
+        }
+        .high2{
+            background-color: white;
+            color: #D9B6B2;
+            display: flex;
+            height: 15vh;
+            width: 65%;
+            flex-direction: row;
+            padding-bottom: 1rem;
+            padding-top: 1rem;
+            position: absolute;
+            bottom: -15%;
+            border: 1px solid black;
+        }
+        .high2 h2{
+            font-family: Montserrat,sans-serif;
+            font-weight: bolder;
+            font-size: 1em;
+
+        }
+        .parallax-item .high2 p{
+            width: 60%;
+            color: teal;
+            height: 60%;
+            line-height: 1.1em;
+            letter-spacing: 0.1em;
+            padding-top: 1%;
+
+        }
+        .visit{
+            flex-direction: row
+        }
+        .select {
+            /* Reset */
+            appearance: none;
+            outline: 0;
+            text-transform: uppercase;
+            font-family: Montserrat, sans-serif;
+            /* Personalize */
+            width: 60%;
+            height: 3em;
+            padding: 0 0 0 1em;
+            background-color: white;
+            border: 1px solid black;
+            color: black;
+            border-radius: 0;
+            box-shadow: inset 0 0 0 0 black;
+            cursor: pointer;
+            position: relative;
+
+        }
+    }
+    @media screen and (max-width: 915px) {
+        .mim{
+            padding-top: 1rem;display: flex;flex-direction: column; background-color: rgba(47,12,22,0.4); width: 87%;;border-radius: 1em; height: 65vmin
+        }
+        .texts{
+            margin-top: 5rem;
+            margin-bottom: 1rem;
+            width: 60%;
+        }
+        .texts p{
+            width: 100%;line-height: 1.5em
+        }
+        .visit{
+            flex-direction: column
+        }
+        .select {
+            /* Reset */
+            appearance: none;
+            outline: 0;
+            text-transform: uppercase;
+            font-family: Montserrat, sans-serif;
+            /* Personalize */
+            width: 80%;
+            height: 3em;
+            padding: 0 0 0 1em;
+            background-color: white;
+            border: 1px solid black;
+            color: black;
+            border-radius: 0;
+            box-shadow: inset 0 0 0 0 black;
+            cursor: pointer;
+            position: relative;
+
+        }
+        .high{
+            background-color: white;
+            color: #2F0C16;
+            display: flex;
+            width: 90%;
+            flex-direction: column;
+            padding-bottom: 3rem;
+            position: sticky;
+            top: 10%;
+            margin-right: 5%;
+            margin-top: -65%;
+            border: 1px solid black;
+        }
+        .high h2{
+            font-family: Montserrat,sans-serif;
+            font-weight: bolder;
+
+        }
+        .high p{
+            width: 80%;
+            color: teal;
+            height: 60%;
+            line-height: 1.1em;
+            letter-spacing: 0.1em;
+
+        }
+        .high2{
+            background-color: white;
+            color: #D9B6B2;
+            display: flex;
+            height: 45%;
+            width: 65%;
+            right: 0;
+            flex-direction: row;
+            padding-bottom: 1rem;
+            padding-top: 1rem;
+            position: absolute;
+            bottom: -15%;
+            border: 1px solid black;
+        }
+        .high2 h2{
+            font-family: Montserrat,sans-serif;
+            font-weight: bolder;
+            font-size: 1em;
+
+        }
+        .parallax-item .high2 p{
+            width: 60%;
+            color: teal;
+            height: 60%;
+            line-height: 1.1em;
+            letter-spacing: 0.1em;
+            padding-top: 1%;
+
+        }
+    }
+</style>
+<section class="prlx">
+    <div style="color: rgb(144, 71, 75);scroll-behavior: smooth" id="parallax" class="parallax-item">
+        <div class="mim" style="">
+            <h2 style="color: white">Made in Morroco</h2>
+            <h3> Quality goods since 1988 </h3>
+            <a href="/about/" class="btn2">Our History</a>
+        </div>
+    </div>
+    <div style="height: 100vh;padding-right: 5%;padding-left: 5%; width: 90%;  justify-content: center; align-items: center" class="parallax-item trgt">
+        <div class="sert" style="display: flex; flex-direction: column;flex: 1 25%;">
+            <svg style="filter: invert(6%) sepia(55%) saturate(1888%) hue-rotate(312deg) brightness(94%) contrast(99%); " aria-hidden="true" focusable="false" role="presentation" class="icon icon-tcwi-plant" viewBox="0 0 100 100"><defs><style>.a{fill:none;stroke:#000;stroke-width:2px}</style></defs><path class="a" d="M15.33 86.58h69.34s-30.67-40.37-69.34 0Z"></path><path class="a" d="M43.15 46.69s9 8.83 9.27 22m29.64-55.26s-27.38-1.32-25.37 25.16c0 0 23 5.54 25.37-25.16Zm0 0L56.69 38.59m6.5-6.42 13.16-.45m-6.3-6.37 9.7-.34m-16.56 7.16.45-13.07m6.41 6.25.34-9.91"></path><path class="a" d="M50.64 59.11a32.68 32.68 0 0 1 6-20.52M18 21.31S16.67 48.7 43.15 46.69c0 0 5.54-23-25.15-25.38Zm-.01 0 25.16 25.38m-6.42-6.5-.45-13.16m-6.37 6.3-.34-9.7m7.16 16.56-13.08-.45m6.26-6.41L20 32.99"></path>
+            </svg>
+            <h2>
+                Fair Trade
+            </h2>
+            <p>We proudly partner with Fair Trade Certified cotton and wool Factories.</p>
+        </div>
+        <div class="sert" style="display: flex; flex-direction: column; flex: 1 25%;">
+            <svg style="filter: invert(6%) sepia(55%) saturate(1888%) hue-rotate(312deg) brightness(94%) contrast(99%);" aria-hidden="true" focusable="false" role="presentation" class="icon icon-tcwi-recycle" viewBox="0 0 100 100"><defs><style>.a{fill:none;stroke:#000;stroke-width:2px}</style></defs><path class="a" d="M24 63.72h17.6v17.64h-6a12.87 12.87 0 0 1-11.57-7.24"></path><path class="a" d="M24 63.72v.07a9.82 9.82 0 0 0-1.2 4.71 12.73 12.73 0 0 0 1.27 5.58l-10.21-20-.62-1.22a9.59 9.59 0 0 1-.58-2 9.27 9.27 0 0 1 1-6.12l2.51-4.58-3.36-1.81 8.07-1.55 8.07-1.54 3.12 7.59 3.13 7.6-3-1.62Zm25-44.44-8 15.66-15.72-8 2.7-5.3a12.87 12.87 0 0 1 11.7-7h.05"></path><path class="a" d="M49 19.28v-.07A9.78 9.78 0 0 0 45.32 16a12.78 12.78 0 0 0-5.55-1.4h23.82a9.77 9.77 0 0 1 2 .38 9.24 9.24 0 0 1 5 3.66l2.94 4.31 3.14-2.17-2.27 7.87-2.29 7.9-8.18-.67-8.19-.66 2.8-1.94ZM76 63.5 67.6 48l15.53-8.38L86 44.89a12.86 12.86 0 0 1-.87 13.62"></path><path class="a" d="M76 63.5a9.82 9.82 0 0 0 4.71-1.18 12.78 12.78 0 0 0 4.3-3.77L72.31 77l-.78 1.12a9 9 0 0 1-1.45 1.44 9.27 9.27 0 0 1-5.85 2L59 81.6v3.82l-5.2-6.36-5.2-6.37 5.21-6.35L59 60v3.41Z"></path>
+            </svg>
+            <h2> 100% Recyclable</h2>
+            <p>Our textiles are made of 100% recycled materials.</p>
+        </div>
+        <div class="sert" style="display: flex; flex-direction: column;flex: 1 25%;">
+            <svg style="filter: invert(6%) sepia(55%) saturate(1888%) hue-rotate(312deg) brightness(94%) contrast(99%);" aria-hidden="true" focusable="false" role="presentation" class="icon icon-tcwi-globe" viewBox="0 0 100 100"><defs><style>.a{fill:none;stroke:#000;stroke-width:2px}</style></defs><path class="a" d="M82.19 69.25a13.09 13.09 0 0 1-3.54-3 1.86 1.86 0 0 1 0-2.38c1.29-1.52 3.08-5-4.17-7.52a5.28 5.28 0 0 0-2.24 0 12.36 12.36 0 0 1-5.49 0 9.78 9.78 0 0 1-4.1-2.16c-.23-.2-.44-.41-.65-.63a10.08 10.08 0 0 1-2.17-10l.15-.46a8.09 8.09 0 0 0-3.92-9.55l-1.83-1c-3.54-1.58-5.69-3.88-6.39-6.83-1-4-.14-7.55 4.46-13.15M32 17.1a13 13 0 0 1 3.52 7.23 9.74 9.74 0 0 1-.52 4.76 11.74 11.74 0 0 1-2.16 3.61 10.49 10.49 0 0 0-1.72 2.73c-.62 1.51-1.12 3.44-.61 4.91a4 4 0 0 0 2.75 2.33c.25.08.52.16.8.23a5.11 5.11 0 0 1 4.24 4.65c.13 2-.82 4.29-2.68 6.44a17.84 17.84 0 0 1-6.76 4.78A15.87 15.87 0 0 1 23 59.93a14.39 14.39 0 0 1-3.14-.35c-3.45-.77-3.73-1.39-6.86-3.58m19.12 27c-.18-2.75-2.68-8.09.69-13.4a22.33 22.33 0 0 1 8.36-7.36c3.48-1.79 6.77-2.37 9-1.58a4.61 4.61 0 0 1 3.08 5.12v.83a4 4 0 0 0 1.21 3.3c1.49 1.26 4.42 1.3 6.66.91a2.55 2.55 0 0 0 .59-.18A12.09 12.09 0 0 1 67 69.43a9.74 9.74 0 0 1 4.51 1.2 12.61 12.61 0 0 1 5.41 5.51"></path><circle class="a" cx="50" cy="50" r="37.5"></circle>
+            </svg>
+            <h2>81% Less</h2>
+            <p>Our organic cotton uses 81% LESS water than conventional cotton.</p>
+        </div>
+    </div>
+    <div class="parallax-item">
+        <div class="high">
+            <h2>Designed for comfort.</h2>
+        <p>
+
+
+            Above all else we design all our garments to be comfortable first and stylish second.
+
+            We believe no one should have to deal with fast fashion, scratchy fabrics, and poor fits.
+        </p>
+        </div>
+        <div class="high2">
+            <h2 style="padding-top: 3px; padding-left: 3%">The one and only</h2>
+            <p style="color: #2F0C16;">
+                The Sahlal family is very reticent on product quality and originality of the design. <br/>
+                You get what you pay for.
+            </p>
+        </div>
+    </div>
+    <div style="" class="parallax-item visit">
+        <div style="flex: 1 50%; flex-direction: column" class="texts">
+            <h2 style="color: white">Visit us</h2>
+            <p style=" ">
+
+                Our Casablanca flagship store<br/>
+
+                Come get cozy at our <span class="sahlal" style="">Sahlal</span> <br/> flagship store <br/>And browse what's in style and in stock.
+                <br/>
+                Mon—Fri, 10h00-20h00<br/>
+                Sat—Sun, 10h00-21h00
+
+            </p>
+            <a style="display: flex" href="#" class="seee" >view map</a>
+        </div>
+        <div style="" class="img">
+            <img style="" src="{{'shop.jpg' | asset_url}}" alt=""/>
+        </div>
+    </div>
+</section>
+<style>
+    .slides{
+        scroll-behavior: smooth;
+        scroll-padding-block: 0;
+    }
+</style>
+<script>
+    const parallax = document.getElementById("parallax");
+
+    // Parallax Effect for DIV 1
+    window.addEventListener("scroll", function () {
+        let offset = window.pageYOffset;
+        offset = offset - document.querySelector(".prod-sec").clientHeight;
+        parallax.style.backgroundPositionY = offset * 0.7 + "px";
+        // DIV 1 background will move slower than other elements on scroll.
+    });
+</script>
+<style>
+    .seee{
+        text-decoration: none;
+        color: white;
+        font-family:Univers-ultra, sans-serif;
+        font-weight: 50;
+        background-color: transparent;
+        border: 2px solid #2F0C16;
+        padding: 1em 1em 1em 1em;
+        border-radius: 3px;
+        box-shadow: inset 0 0 0 0 white;
+        text-transform: uppercase;
+        width: 40%;
+        text-align: center;
+        justify-content: center;
+        margin-top: 3rem;
+
+        transition: ease-out 0.3s;
+    }
+    .seee:hover{
+        box-shadow: inset 500px 0 0 0 white;
+        color: black;
+
+    }
+    .sahlal{
+        cursor: pointer;
+        font-family: Univers,sans-serif;text-transform: uppercase;letter-spacing: 0.1em;color: #2F0C16; font-size: 1em;
+        transition: 0.4s ease;
+        padding-left: 0.5rem;
+        padding-top: 1rem;
+    }
+    .sahlal:hover{
+        color: darkred;
+        font-size: 1.2em;
+    }
+
+
+    .sert svg{
+        width: 25%;
+    }
+    .sert p{
+        width: 80%;
+        letter-spacing: 0.1em;
+        font-weight: lighter;
+    }
+    .sert h2{
+        height: 2rem;
+        text-align: center;
+        display: flex;
+        align-items: center;
+    }
+    .sert{
+        height: 50%;
+    }
+    .btn2{
+        text-decoration: none;
+        color: white;
+        padding: 1.5rem 2rem;
+        border: 1px solid white;
+        margin-top: 2rem;
+        font-size: 1.7em;
+        font-weight: 500;transition: 0.5s ease;
+        box-shadow: inset 0 0 0 0 black;
+    }
+    .btn2:hover{
+        box-shadow: inset 500px 0 0 0 black;
+    }
+    .prlx {
+        padding: 0;
+        margin: 0;
+    }
+
+    .prlx {
+        scroll-behavior: smooth;
+    }
+
+
+
+    .parallax-item h2 {
+        font-size: 2rem;
+        text-transform: uppercase;
+        padding: 1rem;
+        font-weight: 700;
+        border-radius: 1rem;
+    }
+
+
+
+    .parallax-item:nth-child(2) {
+        background: #ffffff;
+        color: black;
+    }
+
+    .parallax-item:nth-child(3) {
+        background: url("{{ 'ctr.jpg' | asset_url}}");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed; /* Parallax Effect for DIV 3 */
+        min-height: 600px;
+        color: white;
+        position: relative;
+
+    }
+
+    .parallax-item:nth-child(4) {
+        background: #D9B6B2;
+    }
+
+    @media screen and (max-width: 768px) {
+        .parallax-item h2 {
+            font-size: 1.5rem;
+        }
+    }
+
+</style>
+<style>
+    .addtocart{
+        width: 80%;
+        height: 3rem;
+        margin-top: 1rem;
+        background-color: white;
+        border: 1px solid black;
+        transition: 0.45s ease;
+    }
+    .addtocart:hover{
+        box-shadow: inset 400px 0 0 0 black;
+        color: white;
+    }
+    .description{
+        width: 80%;
+        padding-bottom: 5rem;
+        font-family: Univers,sans-serif;
+        margin-left: 0;
+        font-size: 0.8em;
+
+    }
+    .arrow{
+        position: absolute;
+        top: 25%;
+        right: 0.5rem;
+        width: 100%;
+    }
+    .frm{
+        width: 100%;
+    }
+    .ul{
+        list-style: none;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+    }
+
+
+    .slides{
+        min-height: 91vh;
+    }
+    .slide{
+
+        display: flex;
+        align-content: center;
+        justify-content: center;
+    }
+    .inner_content img{
+        height: 120vmin;
+        width: 90vmin;
+        object-fit: cover;
+    }
+    .inner_content{
+    }
+    .right-cont{
+        display: flex;
+        flex-direction: column;
+        padding-right: 0.8rem;
+    }
+    .right-cont h1{
+        font-family: Univers,sans-serif;
+        font-weight: lighter;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        padding-top: 2rem;
+        padding-bottom: 1.3rem;
+        text-align: left;
+        width: 100%;
+        color: #2F0C16;
+    }
+    .right-cont h2{
+        font-family: "Open Sans",sans-serif;
+        font-weight: 400;
+        font-size: 1em;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: #666666;
+        padding-bottom: 1.5rem;
+        width: 100%;
+    }
+
+    .selecting{
+        position: relative;
+        width: 100%;
+        margin-bottom: 3rem;
+    }
+    /* <option> colors */
+    .select option {
+        color: white;
+        background-color: black;
+        width: 100%;
+    }
+    /* Remove focus outline */
+    .select:active {
+        background-color: black;
+        color: white;
+        transition: 0.4s ease;
+     }
+    .select:focus{
+        outline: none;
+        background-color: black;
+        color: white;
+    }
+    .select:hover{
+        color: white;
+        box-shadow: inset 300px 0 0 0 black;
+        transition: 0.4s ease;
+    }
+    /* Remove IE arrow */
+    .select::-ms-expand {
+         display: none;
+     }
+
+
+</style>
+<script>
+    function reveal() {
+        let reveals = document.querySelectorAll(".animated");
+
+        for (let i = 0; i < reveals.length; i++) {
+            let windowHeight = window.innerHeight;
+            let elementTop = reveals[i].getBoundingClientRect().top;
+            let elementVisible = 150;
+
+            if (elementTop < windowHeight - elementVisible) {
+                if(reveals[i].classList.contains("reveal")){
+                }
+                else{
+                    reveals[i].classList.add("reveal")
+                }
+            }
+        }
+    }
+
+    window.addEventListener("scroll", reveal);
+</script>
+<script src="{{ 'splide.min.js' | asset_url}}">
+</script>
+<script src="{{ 'splide-extension-auto-scroll.min.js' | asset_url}}">
+</script>
+<script>
+    new Splide( '#s3', {
+        type   : 'loop'
+    } ).mount();
+
+
+    if(screen.width >= 915){
+        const wrapper = document.querySelector('.slides');
+        document.querySelectorAll('.parlx').forEach(div => {
+            window.addEventListener("scroll", e => {
+                let y = window.pageYOffset;
+                div.style.top = 300 + div.parentElement.offsetTop - y + "px";
+            })
+        } )
+        document.querySelectorAll('.slides .slide').forEach(img => {
+            window.addEventListener("scroll", e => {
+                const elem = img.querySelector(".inner_content");
+                const observer = new window.IntersectionObserver(([entry]) => {
+                    if (entry.isIntersecting) {
+                        const id = img.querySelector("img").getAttribute('id')
+                        document.querySelector('.current').classList.remove("current");
+                        document.querySelector(`.ul #R${id}`).classList.add("current");
+                        return
+                    }
+
+                }, {
+                    root: null,
+                    threshold: 0.4, // set offset 0.1 means trigger if atleast 10% of element in viewport
+                })
+
+                observer.observe(img.querySelector(".inner_content"));
+            })
+        } )
+
+
+
+    }
+</script>

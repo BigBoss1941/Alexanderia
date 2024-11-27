@@ -1,0 +1,55 @@
+<section style="height: 70vh">
+<div style=";height: 100%;position: relative">
+    <img  alt="" draggable="false" style=" width: 100%;height: 100%;object-fit: cover" src="{{'collections.jpg' | asset_url  }}">
+    <div style="background-color: rgba(53,33,89,0.7); position: absolute; top: 0; left: 0; height: 100%; z-index: 3; width: 100%"></div>
+    <div style="position: absolute;  top: 42%; left: 10%;font-family: Montserrat, sans-serif;color: #EFEFEF;text-align: center; width: 80%;z-index: 4">
+        <h1 style="font-size: 3.5em">Collections</h1>
+        <p>With modern and timeless designs, our tailorings are made with high quality materials to ensure durability. Whether you're looking for a handbag for everyday use or a special occasion, or an outfit for a casual party, our collection offers a variety of sizes and styles to fit every taste and need.</p>
+    </div>
+</div>
+</section>
+<section style="height: 21vh;position: relative;font-family: Montserrat, sans-serif;color: black ;text-align: center;">
+    <div style="position: absolute;  top: 30%; left: 10%;">
+        <h2>Explore</h2>
+        <p>Collections</p>
+    </div>
+
+
+</section>
+<section style="">
+  {% for collection in collections %}
+    {% unless collection.handle == 'frontpage' %}
+     <a href="{{collection.url}}">
+         <article class="collection" style="position: relative;">
+             <h1 style="text-align: center;z-index: 23;text-transform: uppercase;position: absolute;font-weight: bolder; top: 40%;width: 100%; font-size: 3em; font-family: Montserrat,sans-serif">{{ collection.title }}</h1>
+             <div style=" height: 40vh; overflow: hidden">
+                 <img draggable="false" style="object-fit: cover;height: 100%;width: 100%" src="{{ collection.featured_image.src | image_url: grande }}" alt="{{ product.featured_image.alt | escape }}">
+                 <div style="background-color: rgba(53,33,89,0.38); position: absolute; top: 0; left: 0; height: 100%; z-index: 3; width: 100%"></div>
+
+             </div>
+
+         </article>
+
+     </a>
+    {% endunless %}
+  {% endfor %}
+</section>
+<style>
+    .collection:hover img{
+        transform: scale(1.05);
+    }
+    .collection img   {
+        transition: 5s ease-out;
+    }
+    .collection:hover h1{
+        color: #451b63d6;
+    }
+    .collection h1   {
+        transition: 0.25s ease-out;
+        color: white;
+    }
+
+</style>
+
+
+

@@ -1,0 +1,72 @@
+<div class="drawer1" style="height: 100vh;z-index: 60;position: fixed; ">
+    <div style="display: flex; flex-direction: column;position: relative;background-color: white;">
+        {% for link in linklists.main-menu.links %}
+            {% assign child_list_handle = link.title | handleize %}
+            {% if linklists[child_list_handle].links != blank %}
+                <a class="go" style="height: 20%" href="{{ link.url }}">{{ link.title }}</a>
+                <span style="width: 90%;height: 1px; background-color: red"></span>
+                [{% for childlink in linklists[child_list_handle].links %}
+                <a class="go" style="height: 20%" href="{{ childlink.url }}">{{ childlink.title | escape | upcase }}</a>
+            {% endfor %}]
+            {% else %}
+                {% if link == linklists.main-menu.links.first %}
+                    <a class="drawer-close" type="button" style="position: absolute;right: 1em; top: 1em; cursor: pointer">
+                        <svg aria-hidden="true" focusable="false" fill="none" width="14" class="icon icon-close" viewBox="0 0 16 16">
+                            <path d="m1 1 14 14M1 15 15 1" stroke="currentColor" stroke-width="1"></path>
+                        </svg>
+
+                    </a>
+                {% endif%}
+                <a class="go" style="height: calc(19vh - 3px);max-height: calc(20% - 4px); font-family: Montserrat,sans-serif; font-size: 1.5em; margin-left: 10%;text-align: center; text-decoration: none; display: flex; align-items: center" href="{{ link.url }}">{{ link.title | upcase }}</a>
+                <span style="width: 90%;height: 1px; background-color: black"></span>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+</div>
+<section class="exit" style="width: 100vw; height: 100vh; position: fixed; top: 0;z-index: 59">
+</section>
+<style>
+    @media (max-width: 912px){
+        .drawer1{
+            width: 60%;
+        }
+    }
+    .drawer1.actif{
+        left: 0;
+
+    }
+    .drawer1{
+        width: 60%;
+        left: -100%;
+        transition: 0.7s ease;
+    }
+    .go:hover{
+        color: red;
+    }
+    .go{
+        color: black;
+        transition: color 0.2s ease-out;
+    }
+    .exit{
+        display: none;
+    }
+    .exit.activated{
+        display: flex;
+    }
+</style>
+<script>
+    const mob = document.querySelector(".mob");
+    mob.addEventListener("click", e => {
+        document.querySelector(".drawer1").classList.add('actif');
+        document.querySelector(".exit").classList.add('activated');
+    })
+    document.querySelector(".drawer-close").addEventListener("click", e => {
+        document.querySelector(".drawer1").classList.remove('actif');
+        document.querySelector(".exit").classList.remove('activated');
+    });
+    document.querySelector(".exit").addEventListener("click", e => {
+        document.querySelector(".drawer1").classList.remove('actif');
+        document.querySelector(".exit").classList.remove('activated');
+    });
+</script>

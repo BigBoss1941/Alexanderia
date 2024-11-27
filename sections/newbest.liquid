@@ -1,0 +1,224 @@
+<div class="" style="padding-bottom: 5%;">
+    <h2 style="font-family: Montserrat,sans-serif; text-transform: uppercase;text-align: center; font-weight: lighter; margin-top: 6rem">Quality couture</h2>
+    <article class="links" style="font-family: Montserrat,sans-serif; text-transform: uppercase; font-weight: bolder; ;justify-content: center; margin-top: 2rem; margin-bottom: 3rem ">
+        <h1 class="bags" style="">Collection</h1>
+        <h1 class="rings" style="">Trending</h1>
+    </article>
+<style>
+    @media screen and (min-width: 915px){
+        .links{
+            width: 72% ;display: flex; flex-direction: row;
+            font-size: 1.8em
+        }
+        .links h1{
+            width: 20%; text-align: center
+        }
+    }
+    @media screen and (max-width: 915px){
+        .links{
+            width: 100% ;display: flex; flex-direction: row;
+            font-size: 1.2em
+        }
+    }
+</style>
+    <div style="position: relative;height: 70vh">
+
+        <section style="padding-bottom: 4rem; margin-top: 6%;" class="splide up" id="s1" aria-labelledby="carousel-heading">
+            <div class="splide__arrows">
+                <div class="left splide__arrow--prev" style="position: absolute; left: 3rem"><p><</p></div>
+                <div class="right splide__arrow--next" style="position: absolute"><p>></p></div>
+            </div>
+
+            <div class="splide__track me">
+                <ul class="splide__list">
+                    {% for product in collections['high-couture'].products limit: 10 %}
+                        {% assign current_variant = product.selected_or_first_available_variant %}
+                        <div class="cntnr splide__slide" id="sli{{forloop.index}}" style=" height: 100%; display: flex; flex-direction: column">
+                            <a class="qanchor" style="position: relative;height: 60vmin;width: 40vmin;" href="{{product.url}}">
+                                <div style="overflow: hidden;width: 100%; height: 100%; z-index: 40">
+                                    <img src="{{ product.featured_image | image_url: large }}" alt="" draggable="false" style="width: 100%; height: 100%; object-fit: cover">
+                                    <form style="" action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm">
+                                        <input style="position: absolute; top: 200%; opacity: 0" id="Quantity" name="id" value="{{ product.variants.first.id }}"/>
+                                        <input style="position: absolute; top: 200%; opacity: 0" id="Quantity" name="quantity" value="1"/>
+                                        <button class="qadd" style="position: absolute; bottom: 10%; right: 10%" type="submit" name="add" id="AddToCart">+</button>
+                                    </form>
+                                </div>
+                            </a>
+                            <a class="title-p" style="margin-top: 2em;text-decoration: none; color: black" href="{{product.url}}"><h1 style="font-weight: lighter;font-size: 1.2em;text-align: center; font-family: Montserrat,sans-serif">{{product.title }}</h1></a>
+                            <h2 style="margin-top: 1em;font-weight: lighter;font-size: 1em;text-align: center; font-family: Montserrat,sans-serif">{{product.price | money}} {{shop.currency}}</h2>
+                        </div>
+                    {% endfor %}
+                </ul>
+            </div>
+
+
+        </section>
+        <section style="padding-bottom: 4rem;margin-top: -38%;" id="s2" class="splide notup" aria-labelledby="carousel-heading">
+            <div class="splide__arrows">
+                <div class="left splide__arrow--prev" style="position: absolute; left: 2rem"><p><</p></div>
+                <div class="right splide__arrow--next" style="position: absolute"><p>></p></div>
+            </div>
+            <div class="splide__track me">
+                <ul class="splide__list">
+                    {% for product in collections['trending'].products limit: 10 %}
+                        {% assign current_variant = product.selected_or_first_available_variant %}
+                        <div class="cntnr splide__slide" id="sli{{forloop.index}}" style=" height: 100%; display: flex; flex-direction: column">
+                            <a class="qanchor" style="position: relative;height: 60vmin;width: 40vmin;" href="{{product.url}}">
+                                <div style="overflow: hidden;width: 100%; height: 100%; z-index: 40">
+                                    <img src="{{ product.featured_image | image_url: large }}" alt="" draggable="false" style="width: 100%; height: 100%; object-fit: cover">
+                                    <form style="" action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm">
+                                        <input style="position: absolute; top: 200%; opacity: 0" id="Quantity" name="id" value="{{ product.variants.first.id }}"/>
+                                        <input style="position: absolute; top: 200%; opacity: 0" id="Quantity" name="quantity" value="1"/>
+                                        <button class="qadd" style="position: absolute; bottom: 10%; right: 10%" type="submit" name="add" id="AddToCart">+</button>
+                                    </form>
+                                </div>
+                            </a>
+                            <a class="title-p" style="margin-top: 2em;text-decoration: none; color: black" href="{{product.url}}"><h1 style="font-weight: lighter;font-size: 1.2em;text-align: center; font-family: Montserrat,sans-serif">{{product.title }}</h1></a>
+                            <h2 style="margin-top: 1em;font-weight: lighter;font-size: 1em;text-align: center; font-family: Montserrat,sans-serif">{{product.price | money}} {{shop.currency}}</h2>
+                        </div>
+                    {% endfor %}
+                </ul>
+            </div>
+
+        </section>
+
+    </div>
+
+
+</div>
+<style>
+    @keyframes pan {
+        0%{
+            transform: translateX(0);
+        }
+        49%{
+            transform: translateX(2rem);
+            opacity: 0;
+        }
+        51%{
+            transform: translateX(-2rem);
+            opacity: 0;
+        }
+        100%{
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    .right:hover p{
+        animation: pan 0.4s;
+    }
+    .left:hover p{
+        animation: pan 0.4s reverse;
+    }
+    .right:hover, .left:hover{
+        background-color: papayawhip;
+        color: rebeccapurple;
+    }
+    .right, .left{
+        transition: background-color 0.3s ease, color 0.3s ease;}
+</style>
+<script src="{{ 'splide.min.js' | asset_url}}">
+</script>
+<script src="{{ 'splide-extension-auto-scroll.min.js' | asset_url}}">
+</script>
+<style>
+    .up{
+        opacity: 1;
+
+    }
+
+    @media screen and (min-width: 915px){
+        .notup{
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(40%);
+        }
+    }
+    @media screen and (max-width: 915px){
+        .notup {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(40%);
+
+
+        }
+        .coming{
+            transform: translateY(-60%);
+        }
+
+    }
+
+    .splide{
+        transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
+    article .rings{
+        cursor: pointer;
+        transition: 0.5s ease;
+    }
+    article .bags{
+        cursor: pointer;
+        transition: 0.5s ease;
+    }
+    article .bags:hover, article .rings:hover{
+        color: #7e1a38;
+    }
+</style>
+<script>
+    new Splide( '#s1', {
+        type   : 'loop',
+        speed  : 1000,
+        drag   : 'free',
+        snap   : true,
+        pagination: false,
+        perPage: 3,
+        gap: '2px',
+        breakpoints: {
+            915: {
+                perPage: 1,
+                snap   : true,
+            },
+        }
+    } ).mount();
+
+    new Splide( '#s2', {
+        type   : 'loop',
+        drag   : 'free',
+        snap   : true,
+        pagination: false,
+        perPage: 2,
+        padding: { left: '0.1rem', right: '0.1rem' },
+        gap: '5px',
+        breakpoints: {
+            915: {
+                perPage: 1,
+                snap   : true,
+            },
+        }
+    } ).mount();
+
+
+</script>
+<script>
+
+    document.querySelector(".bags").addEventListener("click", e => {
+        if(current=== "rings"){
+            document.querySelector("#s2").classList.remove("coming")
+            document.querySelector("#s2").classList.remove("up")
+            document.querySelector("#s1").classList.remove("notup")
+            document.querySelector("#s2").classList.add("notup")
+            document.querySelector("#s1").classList.add("up")
+            current='bags';
+    }})
+
+    document.querySelector(".rings").addEventListener("click", e => {
+        if(current === 'bags'){
+            document.querySelector("#s1").classList.remove("up")
+            document.querySelector("#s2").classList.remove("notup")
+            document.querySelector("#s1").classList.add("notup")
+            document.querySelector("#s2").classList.add("up")
+            document.querySelector("#s2").classList.add("coming")
+
+            current='rings';
+        }});
+</script>

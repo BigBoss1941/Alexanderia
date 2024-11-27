@@ -1,0 +1,304 @@
+
+<style>
+    @keyframes pan {
+        0%{
+            transform: translateX(0);
+        }
+        49%{
+            transform: translateX(2rem);
+            opacity: 0;
+        }
+        51%{
+            transform: translateX(-2rem);
+            opacity: 0;
+        }
+        100%{
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    .right:hover p{
+        animation: pan 0.4s;
+    }
+    .left:hover p{
+        animation: pan 0.4s reverse;
+    }
+    .right:hover, .left:hover{
+        background-color: #2F0C16;
+        color: white;
+    }
+    .right, .left{
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .title-p h1:hover{
+        color: #7e1a38;
+    }
+    .title-p h1{
+        transition: 0.5s ease;
+    }
+    .qadd{
+        background-color: #130c0c;
+        border-radius: 50%;
+        color: white;
+        border: 0;
+        width: 2rem;
+        height: 2rem;
+        opacity: 0;
+        transform: rotateZ(-65deg);
+        cursor: pointer;
+        transition: opacity 0.5s ease-out, transform 0.5s ease-out, color 0.1s ease-out, background-color 0.1s ease-out;
+    }
+    .qanchor:hover .qadd{
+        opacity: 1;
+        transform: rotateZ(0deg);
+    }
+    .qadd:active{
+        color: black;
+        background-color: white;
+    }
+    .qanchor img{
+        transition: 0.25s ease-out;
+    }
+    .qanchor:hover img{
+        transform: scale(1.2);
+    }
+</style>
+<script>
+
+    const right = document.querySelector(".slider .right");
+    const left = document.querySelector(".slider .left");
+    const slider = document.querySelector(".slider .prod_slides ");
+    let left_remaining = 0;
+    let right_remaining = 6;
+    const rings = document.querySelector(".slider .prod_slides2");
+    let current = 'bags';
+    document.querySelector(".h1").addEventListener("click", e => {
+        if(current=== "rings"){
+            rings.animate({
+                opacity : `0`,
+                top : `100%`
+            }, {duration: 500, fill: "forwards", easing: "ease-in-out"});
+            slider.animate({
+                opacity : `1`,
+                top : `0`
+            }, {duration: 500, fill: "forwards", easing: "ease-in-out"})
+            current = 'bags'
+        }
+
+    })
+
+    document.querySelector(".h2").addEventListener("click", e => {
+        if(current === 'bags'){
+            slider.animate({
+                opacity : `0`,
+                top : `100%`
+            }, {duration: 500, fill: "forwards", easing: "ease-in-out"});
+            rings.animate({
+                opacity : `1`,
+                top : `0`
+            }, {duration: 500, fill: "forwards", easing: "ease-in-out"});
+            console.log("rings");
+            current='rings';
+        }
+
+
+    })
+    right.addEventListener("click", e => {
+            if(right_remaining === 6){
+                slider.animate({
+                    transform: `translateX(-105%)`
+                }, {duration: 800, fill: "forwards", easing: "ease-out"});
+                rings.animate({
+                    transform: `translateX(-105%)`
+                }, {duration: 800, fill: "forwards", easing: "ease-out"});
+                right_remaining=2;
+                left_remaining = 4;
+                console.log(right_remaining)
+            }
+            else if(right_remaining === 2){
+                slider.animate({
+                    transform: `translateX(-156%)`
+                }, {duration: 600, fill: "forwards", easing: "ease-out"});
+                rings.animate({
+                    transform: `translateX(-156%)`
+                }, {duration: 600, fill: "forwards", easing: "ease-out"});
+                right_remaining=0;
+                left_remaining = 6;
+            }
+            else if(right_remaining === 4){
+                slider.animate({
+                    transform: `translateX(-156%)`
+                }, {duration: 600, fill: "forwards", easing: "ease-out"});
+                rings.animate({
+                    transform: `translateX(-156%)`
+                }, {duration: 600, fill: "forwards", easing: "ease-out"});
+                right_remaining=0;
+                left_remaining = 6;
+            }
+
+            console.log("hi")
+    });
+    left.addEventListener("click", e => {
+        if(left_remaining === 6){
+            slider.animate({
+                transform: `translateX(-50%)`
+            }, {duration: 800, fill: "forwards", easing: "ease-in-out"});
+            rings.animate({
+                transform: `translateX(-50%)`
+            }, {duration: 800, fill: "forwards", easing: "ease-in-out"});
+            right_remaining=4;
+            left_remaining = 2;
+        }
+        else if(left_remaining === 2){
+            slider.animate({
+                transform: `translateX(0)`
+            }, {duration: 600, fill: "forwards", easing: "ease-out"});
+            rings.animate({
+                transform: `translateX(0)`
+            }, {duration: 600, fill: "forwards", easing: "ease-out"});
+            right_remaining=6;
+            left_remaining = 0;
+        }
+        else if(left_remaining === 4){
+            slider.animate({
+                transform: `translateX(0)`
+            }, {duration: 600, fill: "forwards", easing: "ease-out"});
+            rings.animate({
+                transform: `translateX(0)`
+            }, {duration: 600, fill: "forwards", easing: "ease-out"});
+            right_remaining=6;
+            left_remaining = 0;
+        }
+    });
+</script>
+<style>
+    .prod_slides div a img, .prod_slides2 div a img{
+        border: 1px solid #e0dfdf;
+    }
+    .slider{
+        width: 92%;
+        height: 60%;
+        background-color: #F5F3F3;
+        display: flex;
+        position: relative;
+        overflow-x: hidden;
+        flex-direction: row;
+        overflow-y: hidden;
+
+    }
+    .prod_slides2{
+        display: flex;
+        height: 90%;
+        width: 100%;
+        overflow-x: visible;
+        scroll-snap-type: x mandatory;
+        position: absolute;
+        opacity: 0;
+        top: 100%;
+    }
+    .prod_slides{
+        display: flex;
+        height: 90%;
+        width: 100%;
+        overflow-x: visible;
+        scroll-snap-type: x mandatory;
+        position: absolute;
+    }
+    #sli1{
+        scroll-snap-align: start;
+    }
+    .links h1{
+        position: relative;
+        cursor: default;
+    }
+    .links .h1:after{
+        content: '';
+        width: 18vmin;
+        height: 1px;
+        background-color: black;
+        position: absolute;
+        top: 100%;
+        left: 20%;
+        transition: 0.5s ease;
+    }
+    .links .h1:hover, .links .h2:hover{
+        color: #656565;
+    }
+    .links .h1:active, .links .h2:active{
+        color: #882340;
+    }
+    .links .h1:hover:after {
+        width: 0;
+
+    }
+
+    .h2:after{
+          content: '';
+          width: 60%;
+          height: 1px;
+          background-color: black;
+          position: absolute;
+          top: 100%;
+          left: 20%;
+          transition: 0.5s ease;
+      }
+    .h2:hover:after{
+          width: 0;
+
+      }
+
+
+    .left, .right{
+        border-radius: 50%;
+        background-color: rebeccapurple;
+        height: 60px;
+        color: white;
+        width: 60px;
+        box-shadow: 0 .125rem .625rem rgb(213, 212, 212);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.6em;
+        font-weight: lighter;
+        position: absolute;
+        top: calc(50% - 90px);
+        cursor: pointer;
+    }
+    .left{
+        left: 0;
+        z-index: 2;
+    }
+    .right{
+        right: 0;
+        z-index: 2;
+    }
+    #bsl{
+        background-color: #F5F3F3;
+        height: 130vh;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+</style>
+<script src="{{ 'splide.min.js' | asset_url}}">
+</script>
+<script src="{{ 'splide-extension-auto-scroll.min.js' | asset_url}}">
+</script>
+
+<script>
+    new Splide( '.splide', {
+        type   : 'loop',
+        drag   : 'free',
+        snap   : true,
+        perPage: 3,
+        padding: { left: '0.1rem', right: '0.1rem' },
+        gap: '5px',
+        breakpoints: {
+            915: {
+                perPage: 1,
+                snap   : true,
+            },
+        }
+    } ).mount(window.splide.Extensions);
+</script>

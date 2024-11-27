@@ -1,0 +1,371 @@
+<div class="cart-drawer">
+    <div class="cart-drawer-box">
+        <header class="cart-drawer-header">
+            <div class="cart-sec">
+                <div class="wrap">
+                    <h2 style="position: absolute;left: 1em">CART</h2>
+                    <div class="cart-drawer-header-right">
+                        {% if cart.item_count == 0 %}
+                            <span class="cart-drawer-header-right-items"></span>
+                        {% else %}
+                            <span class="cart-drawer-header-right-items">{{ cart.item_count }} items</span>
+                        {% endif %}
+                    </div>
+                    <button class="cart-drawer-header-right-close" type="button" style="">
+                        <svg aria-hidden="true" focusable="false" fill="none" width="14" class="icon icon-close" viewBox="0 0 16 16">
+                            <path d="m1 1 14 14M1 15 15 1" stroke="currentColor" stroke-width="1"></path>
+                        </svg>
+
+                    </button>
+                </div>
+
+            </div>
+
+
+        </header>
+
+        <div class="scrlb">
+            {% form 'cart', cart, class: 'cart-drawer-form' %}
+                {% if cart.item_count == 0 %}
+                    <p class="cart-drawer-empty">You have nothing. pliz buy :)</p>
+                {% else %}
+                    <div class="cart-drawer-items">
+                        {% for item in cart.items %}
+                        {% if item == cart.items.first %}
+                            <div  class="wrapr" >
+                                <div loading="lazy" class="cart-drawer-item slide-in-blurred-bottom" style="border-top: 0" data-line-item-key="{{ item.key }}">
+                                    <a href="{{ item.url}}" class="cart-drawer-item-image slide-in-blurred-bottom">
+                                        <img src="{{ item.image | img_url: '200x' }}" alt="{{ item.title }}">
+                                    </a>
+                                    <div class="cart-drawer-item-main slide-in-blurred-bottom">
+                                        <div class="cart-drawer-item-main-flex">
+                                            <div class="cart-drawer-item-main-flex-left">
+                                                <h3>
+                                                    <a style="font-family: Montserrat,sans-serif;" class="cart-prod" href="{{ item.url }}">{{ item.product.title }}<br/></a>
+                                                    <span style="font-family: Montserrat,sans-serif">{{ item.variant.title }}</span>
+                                                </h3>
+
+                                                <div class="cart-drawer-quantity-selector">
+                                                    <div class="nbs" style="flex: 1 50%; display: flex">
+                                                        <button class="cart-drawer-quantity-selector-minus" type="button">
+                                                            -
+                                                        </button>
+                                                        <input type="text" id="" class="selectz" max="{{item.variant.inventory_quantity}}" readonly value="{{ item.quantity }}">
+                                                        <button class="cart-drawer-quantity-selector-plus" type="button">+</button>
+                                                    </div>
+                                                    <div class="bruh">
+                                                        <button class="lal" type="button">Remove</button>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                            <div style="position: relative" class="cart-drawer-item-main-flex-right">
+                                                <span class="moni" id="{{item.id}}" data-value="{{item.price}}" style="font-family: Montserrat,sans-serif;position: absolute;top: 0.5rem">{{ item.final_line_price | money_without_currency }} {{shop.currency}} </span>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div  class="wrapr">
+                                <div loading="lazy" class="cart-drawer-item slide-in-blurred-bottom" data-line-item-key="{{ item.key }}">
+                                    <a href="{{ item.url}}" class="cart-drawer-item-image slide-in-blurred-bottom">
+                                        <img src="{{ item.image | img_url: '200x' }}" alt="{{ item.title }}">
+                                    </a>
+                                    <div class="cart-drawer-item-main slide-in-blurred-bottom">
+                                        <div class="cart-drawer-item-main-flex">
+                                            <div class="cart-drawer-item-main-flex-left">
+                                                <h3>
+                                                    <a style="font-family: Montserrat,sans-serif;" class="cart-prod" href="{{ item.url }}">{{ item.product.title }}<br/></a>
+                                                    <span style="font-family: Montserrat,sans-serif">{{ item.variant.title }}</span>
+                                                </h3>
+
+                                                <div class="cart-drawer-quantity-selector">
+                                                    <div class="nbs" style="flex: 1 50%; display: flex">
+                                                        <button class="cart-drawer-quantity-selector-minus" type="button">
+                                                            -
+                                                        </button>
+                                                        <input type="text" id="" class="selectz" max="{{item.variant.inventory_quantity}}" readonly value="{{ item.quantity }}">
+                                                        <button class="cart-drawer-quantity-selector-plus" type="button">+</button>
+                                                    </div>
+                                                    <div class="bruh">
+                                                        <button class="lal" type="button">Remove</button>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                            <div style="position: relative" class="cart-drawer-item-main-flex-right">
+                                                <span class="moni" id="{{item.id}}" data-value="{{item.price}}" style="font-family: Montserrat,sans-serif;position: absolute;top: 0.5rem">{{ item.final_line_price | money_without_currency }} {{shop.currency}} </span>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {% endfor %}
+                    </div>
+
+                    <div class="foot">
+                        <footer class="cart-drawer-footer">
+                            {% if cart.total_discounts > 0 %}
+                                <div class="cart-drawer-footer-row">
+                                    <h3>Discounts</h3>
+                                    <span>{{ cart.total_discounts | money }}</span>
+                                </div>
+                            {% endif %}
+                            <div class="cart-drawer-footer-row">
+                                <h3>Subtotal : </h3>
+                                <span class="subt" data-value="{{cart.total_price}}">{{ cart.total_price | money }} {{ shop.currency}}</span>
+                            </div>
+                            <div class="btn">
+                                <button type="submit" name="checkout" class="cart-drawer-button">
+                                    CHECKOUT <span> <span class="tot" data-value="{{cart.total_price}}">{{ cart.total_price | money }} {{ shop.currency}}</span></span>
+                                </button>
+                            </div>
+                        </footer>
+                    </div>
+                {% endif %}
+            {% endform %}
+        </div>
+
+    </div>
+</div>
+<style>
+
+</style>
+<script>
+    let changes = [];
+    let status = 0;
+    function openCartDrawer() {
+        document.querySelector(".cart-drawer").classList.add("cart-drawer--active");
+        document.querySelector("body").classList.remove("scrl");
+        document.querySelector("body").classList.add("noscroll");
+
+    }
+
+    function closeCartDrawer() {
+        document
+            .querySelector(".cart-drawer")
+            .classList.remove("cart-drawer--active");
+
+
+        document
+            .querySelector("body")
+            .classList.remove("noscroll");
+        document.querySelector("body").classList.add("scrl")
+
+    }
+
+    function updateCartItemCounts(count) {
+        console.log("nuffin")
+    }
+
+    async function updateCartDrawer() {
+        const res = await fetch("/?section_id=cart-drawer");
+        const text = await res.text();
+        const html = document.createElement("div");
+        html.innerHTML = text;
+
+        document.querySelector(".cart-drawer").innerHTML = html.querySelector(".cart-drawer").innerHTML;
+
+        addCartDrawerListeners();
+    }
+    async function updateCartDrawer2() {
+        const res = await fetch("/?section_id=cart-drawer");
+        if (res.ok){
+            status -= 1
+        }
+    }
+
+    function addCartDrawerListeners() {
+        // Update quantities
+        document
+            .querySelectorAll(".bruh button")
+            .forEach((button) => {
+
+                button.addEventListener("click", async (e) => {
+                    const rootItem =
+                        button.parentElement.parentElement.parentElement.parentElement
+                            .parentElement.parentElement;
+                    const key = rootItem.getAttribute("data-line-item-key");
+                    const newQuantity = 0;
+
+                    // Ajax update\
+
+                    const res = await fetch("/cart/update.js", {
+                        method: "post",
+                        headers: {
+                            Accept: "application/json",
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ updates: { [key]: newQuantity } }),
+                    });
+                    const cart = await res.json();
+
+                    updateCartItemCounts(cart.item_count);
+
+                    // Update cart
+                    await updateCartDrawer();
+                });
+
+            });
+        document
+            .querySelectorAll(".cart-drawer-quantity-selector button")
+            .forEach((button) => {
+                button.addEventListener("click", async (e) => {
+                    const rootItem =
+                        button.parentElement.parentElement.parentElement.parentElement
+                            .parentElement.parentElement;
+                    const key = rootItem.getAttribute("data-line-item-key");
+                    // Get new quantity
+                    const currentQuantity = Number(
+                        button.parentElement.querySelector("input").value
+                    );
+                    const isUp = button.classList.contains(
+                        "cart-drawer-quantity-selector-plus"
+                    );
+                    console.log(`first ${status}`)
+                    const linetotal = button.parentElement.parentElement.parentElement.parentElement.querySelector(".moni");
+                    const newQuantity = isUp ? currentQuantity + 1 : currentQuantity - 1;
+                    if(newQuantity > 0 && newQuantity <= button.parentElement.querySelector("input").max){
+                        button.parentElement.querySelector("input").setAttribute('value', newQuantity);
+                        changes.push(key);
+                        changes.push(newQuantity);
+                        status += 1;
+                        console.log(`second ${status}`)
+                        const val = linetotal.dataset.value / 100;
+                        const newk = newQuantity * val;
+                        const last = newk.toLocaleString('en-US');
+
+                        linetotal.textContent = `${last} {{shop.currency}}`;
+                        const subt = document.querySelector(".subt");
+                        const tota = document.querySelector(".tot");
+                        let subto = subt.dataset.value / 100
+                        let total = tota.dataset.value / 100
+                        if (button.textContent === '+'){
+                            subto = subto + val;
+                            total = total + val;
+                        }
+                        else{
+                            subto = subto - val;
+                            total = total - val;
+                        }
+
+                        const lal2 = total.toLocaleString('en-US');
+                        const lal = subto.toLocaleString('en-US');
+                        subt.textContent = `${lal} {{shop.currency}}`;
+                        tota.textContent = `${lal2} {{shop.currency}}`;
+                        subto = subto*100;
+                        subt.setAttribute("data-value", subto);
+                        total = total*100;
+                        tota.setAttribute("data-value", total);
+                        const res = await fetch("/cart/update.js", {
+                            method: "post",
+                            headers: {
+                                Accept: "application/json",
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({ updates: { [key]: newQuantity } }),
+                        });
+
+
+                        // Update cart
+                        await updateCartDrawer2();
+
+                    }
+                });
+
+            });
+
+        document.querySelector(".cart-drawer-box").addEventListener("click", (e) => {
+            e.stopPropagation();
+
+        });
+
+        document
+            .querySelectorAll(".cart-drawer-header-right-close, .cart-drawer")
+            .forEach((el) => {
+                el.addEventListener("click",  async (e) => {
+                    closeCartDrawer();
+
+                });
+            });
+
+    }
+
+
+    addCartDrawerListeners();
+
+    document.querySelectorAll('form[action="/cart/add"]').forEach((form) => {
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            console.log( {{lineitem.variant.inventory_quantity}} )
+
+            // Submit form with ajax
+            await fetch("/cart/add", {
+                method: "post",
+                body: new FormData(form),
+            });
+
+            // Get cart count
+            const res = await fetch("/cart.js");
+            const cart = await res.json();
+            updateCartItemCounts(cart.item_count);
+
+            // Update cart
+            await updateCartDrawer();
+
+            // Open cart drawer
+            openCartDrawer();
+        });
+    });
+
+    document.querySelectorAll('a[href="/cart"]').forEach((a) => {
+        a.addEventListener("click", (e) => {
+            e.preventDefault();
+            openCartDrawer();
+        });
+    });
+    document.querySelector(".cart-drawer-button").addEventListener("submit", e => {
+        e.preventDefault();
+        let interval = 400;
+        let timer = window.setInterval(function(){
+            // your code goes here ...
+            if (status === 0) {
+                this.submit();
+                window.clearInterval(timer);
+            }
+        }, interval);
+
+
+    })
+    document.querySelector(".cart-drawer-item-image").forEach((img) => {
+    img.addEventListener("click", e => {
+            e.preventDefault();
+            let interval = 400;
+            let timer = window.setInterval(function(){
+                // your code goes here ...
+                if (status === 0) {
+                    window.location = img.attr('href');
+                    window.clearInterval(timer);
+                }
+            }, interval);
+
+
+        })
+    })
+</script>
+<script src=
+        "https://code.jquery.com/jquery-3.4.1.min.js">
+</script>
+
+{% schema %}
+    {
+    "name": "Cart drawer"
+    }
+{% endschema %}

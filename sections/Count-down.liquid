@@ -1,0 +1,170 @@
+<section class="cds" loading="lazy">
+    <div class="descr" style="flex: 1 60%; z-index: 2">
+        <h2>Limited time only</h2>
+        <h1>Super Sale Up to 40% off</h1>
+        <p>
+            Shop our selection of exclusive outfits at reduced price during the Summer Sale. Hurry up!
+        </p>
+        <a href="/collections" class="see_2">Shop Now</a>
+    </div>
+    <div id="the-final-countdown" style="z-index: 2 ;flex: 1 40%;color: white;display: flex;flex-direction: row">
+        <div class="addpadding" style="background-color: rgba(15,15,15,0.7);display: flex;flex-direction: row;width: 90%;height: 20%;align-items: center">
+            <div id="fcd" style="text-align: center">
+                <p></p>
+                <span>Days</span>
+            </div>
+            <span class="ddot">:</span>
+            <div id="fch" style="text-align: center">
+                <p></p>
+                <span>Hours</span>
+            </div>
+            <span class="ddot">:</span>
+            <div id="fcm" style="text-align: center">
+                <p></p>
+                <span>Minutes</span>
+            </div>
+            <span class="ddot">:</span>
+            <div id="fcs" style="text-align: center">
+                <p></p>
+                <span>Seconds</span>
+            </div>
+        </div>
+    </div>
+</section>
+<style>
+    #the-final-countdown{
+        align-items: center;
+        justify-content: center;
+        font-family: Montserrat,sans-serif;
+        font-size: 1.2em;
+
+    }
+    .see_2{
+        text-decoration: none;
+        color: white;
+        font-family:Univers-ultra, sans-serif;
+        font-weight: 50;
+        background-color: black;
+        border: 1px solid white;
+        padding: 1em 1em 1em 1em;
+        border-radius: 3px;
+        box-shadow: inset 0 0 0 0 white;
+        transition: ease-out 0.3s;
+        margin-top: 7%;
+        display: flex;
+        width: 30%;
+        align-items: center;
+        justify-content: center;
+        margin-left: 0;
+    }
+    .see_2:hover{
+        border: 1px solid white;
+        box-shadow: inset 380px 0 0 0 white;
+        color: black;
+
+    }
+    @media screen and (min-width: 915px) {
+        .cds{
+            height: 70vh;
+
+
+            display: flex;
+            flex-direction: row;
+            position: relative;
+            z-index: 1;
+        }
+    }
+    @media screen and (max-width: 915px) {
+        .cds{
+            height: 70vh;
+
+
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 1;
+        }
+        .addpadding{
+            padding: 1em;
+        }
+    }
+    .cds:after{
+        content: '';
+        filter:brightness(90%)saturate(70%);
+        background-image: url("{{'timer.jpg' | asset_url }}");
+        object-fit: cover;
+        background-size: cover;
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        z-index: 0;
+    }
+    .descr{
+        color: white;
+        font-family: Montserrat,sans-serif;
+        font-weight: bold;
+        height: 100%;
+        margin-left: 1.5rem;
+        filter: brightness(1);
+    }
+    .descr h2{
+        margin-top: 7%;
+        font-weight: lighter;
+    }
+    .descr h1{
+        margin-top: 5%;
+        font-size: 2.5em;
+        font-weight: bolder;
+    }
+    .descr p{
+        margin-top: 5%;
+        font-size: 1.5em;
+        font-weight: lighter;
+    }
+</style>
+<script>
+    const zeroPad = (num, places) => String(num).padStart(places, '0');
+
+    let d = new Date();
+    const that_days = document.querySelector("#the-final-countdown #fcd p");
+    const that_hours = document.querySelector("#the-final-countdown #fch p");
+    const that_min = document.querySelector("#the-final-countdown #fcm p");
+    const that_sec = document.querySelector("#the-final-countdown #fcs p");
+    let days = zeroPad(31 - d.getDay(),2);
+    let hours = zeroPad(24 - d.getHours(),2);
+    let min = 60 - d.getMinutes();
+    if((min + '').length == 1){
+        min = '0' + min;
+    }
+    min = zeroPad(min,2);
+    let secs = 60 - d.getSeconds();
+    if((secs + '').length == 1){
+        secs = '0' + secs;
+    }
+    that_days.textContent = days;
+    that_hours.textContent = hours;
+    that_min.textContent = min;
+    that_sec.textContent = secs;
+
+    setInterval(function time(){
+         d = new Date();
+         days = zeroPad(31 - d.getDay(),2);
+         hours = zeroPad(24 - d.getHours(),2);
+         min = 60 - d.getMinutes();
+        if((min + '').length == 1){
+            min = '0' + min;
+        }
+        min = zeroPad(min,2);
+         secs = 60 - d.getSeconds();
+        if((secs + '').length == 1){
+            secs = '0' + secs;
+        }
+        secs = zeroPad(secs,2);
+        that_days.textContent = days;
+        that_hours.textContent = hours;
+        that_min.textContent = min;
+        that_sec.textContent = secs;
+
+    }, 1000);
+</script>

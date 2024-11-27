@@ -1,0 +1,39 @@
+<script>
+    window.onload = function (){
+        document
+            .querySelectorAll(".aha img")
+            .forEach((img) => {
+                img.classList.remove('start')
+    });}
+
+</script>
+<section id="d1" class="">
+
+    <div  class="" style="" id="image-track" data-mouse-down-at="0" data-prev-percentage="0">
+        <article class="text">
+            <h1>A NEW COLLECTION ARRIVES</h1>
+            <p>Only for a limited time <br/> Seldom seen on the <span>Runway</span></p>
+            <a class="see" href="/collections/all">VIEW COLLECTION</a>
+        </article>
+        <div class="aha"><img class="image" alt="" src="{{ 'R13.jpg' | asset_url }}" draggable="false" />
+        </div>
+        <div class="aha"><img class="image start" alt="" src="{{ 'R2.jpg' | asset_url }}" draggable="false" />
+        </div>
+        <div class="aha"><img style="transition: 1s ease-out" class="image start" alt=""  src="{{ 'R3.jpg' | asset_url }}" draggable="false" />
+        </div>
+        <div class="aha"> <img class="image start" alt="" src="{{ 'R7.jpg' | asset_url }}"  draggable="false" />
+        </div>
+        <div class="aha"><img class="image" alt="" src="{{ 'R9.jpg' | asset_url }}" draggable="false" />
+        </div>
+        <div class="aha"><img class="image" alt="" src="{{ 'R12.jpg' | asset_url }}" draggable="false" />
+        </div>
+        <div class="aha"><img class="image" alt="" src="{{ 'R3.jpg' | asset_url }}" draggable="false" />
+        </div>
+        <div class="aha"><img class="image" alt="" src="{{ 'R1.jpg' | asset_url }}" draggable="false" />
+        </div>
+
+
+        </div>
+</section>
+<script src="{{ 'slider.js' | asset_url }}"></script>
+{{'front-slider-2.css' | asset_url | stylesheet_tag }}

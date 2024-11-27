@@ -1,0 +1,234 @@
+<section id="d2" loading="lazy">
+    <div class="main-footer">
+        <div class="newsletter" style="">
+            <h3>NEWSLETTER</h3>
+            <p>Subscribe to receive updates, access to exclusive deals, and more</p>
+            <div class="form-control" style="width: 100%">
+                <input id="input-sections--14544586047551__footer--contactemail" class="input" type="email" dir="ltr" name="contact[email]" autocomplete="email" enterkeyhint="send" required="">
+                <label for="input-sections--14544586047551__footer--contactemail" class="floating-label text-xs">E-mail</label>
+                <span class="bar"></span>
+            </div>
+            <button class="control" type="submit">SUBSCRIBE</button>
+        </div>
+        <div class="shop" style="">
+            <h3>SHOP</h3>
+            {% for collection in collections %}
+            <a class="shoping" href="{{collection.url}}">{{collection.title}}</a>
+            {% endfor %}
+        </div>
+        <div class="information" style="">
+            <h3>INFORMATION</h3>
+            {% for collection in collections %}
+                <a class="shoping" href="{{collection.url}}">{{collection.title}}</a>
+            {% endfor %}
+
+        </div>
+        <div class="about" style="">
+            <h3>ABOUT US</h3>
+            <p>The story of us. We are a family run Morrocan business sharing our lives ever since we opened. Since our early days, we always had the dream to develop a project together. Here it is!</p>
+        </div>
+    </div>
+    <div class="lower-footer">
+        <p>© 2023 - SAHLAL</p>
+        <div class="visa">
+            <img src="{{'visa.svg' | asset_url }}" alt="" title="Visa">
+            <img src="{{'mastercard.svg' | asset_url }}" alt="" title="MasterCard">
+            <img src="{{'ppl.svg' | asset_url }}" alt="" title="Paypal">
+            <img src="{{'AMC.svg' | asset_url }}" alt="" title="American Master Card">
+
+        </div>
+    </div>
+</section>
+<style>
+    @media screen and (max-width: 915px){
+        .main-footer{
+            flex-wrap: wrap;
+            flex-direction: row;
+        }
+        .lower-footer{
+            flex-direction: column;
+            gap: 10%;
+        }
+        .visa{
+            width: 50%;
+        }
+
+        .visa {
+            display: flex;
+            gap: 15%;
+        }
+        .newsletter{
+            flex: 1 25%;
+            padding-top: 3rem;
+        }
+        .shop{
+            flex: 1 25%;
+            padding-top: 3rem;
+        }
+        .information{
+            flex: 1 25%;
+            padding-top: 3rem;
+        }
+        .about{
+            flex: 1 25%;
+            padding-top: 3rem;
+        }
+    }
+    @media screen and (min-width: 915px){
+        .main-footer{
+            height: 55vh;
+        }
+        .visa {
+            display: flex;
+            gap: 35%;
+        }
+        .newsletter{
+            flex: 1 25%
+        }
+        .shop{
+            flex: 1 15%
+        }
+        .information{
+            flex: 1 15%
+        }
+        .about{
+            flex: 1 25%
+        }
+    }
+    .lower-footer p{
+        color: #8B8B8B;
+    }
+    .visa img{
+        max-width: 3.6em;
+        max-height: 1.2em;
+    }
+    .form-control{
+        margin-bottom: 2em;
+        position: relative;
+
+
+    }
+    .form-control input{
+        width: 80%;
+        padding: 10px 10px 5px 5px;
+        border: 0;
+        border-bottom: 1px solid #1C1C1C;
+    }
+    .floating-label{
+        color: #999;
+        font-size: 12px;
+        font-weight: normal;
+        font-family: Montserrat, sans-serif;
+        position: absolute;
+        pointer-events: none;
+        left: 5px;
+        top: 10px;
+        transition: 0.2s ease all;
+        -moz-transition: 0.2s ease all;
+        -webkit-transition: 0.2s ease all;
+
+    }
+    .form-control input:focus ~ .floating-label,
+    .form-control input:valid ~ .floating-label {
+        top: -7px;
+        color: black;
+        font-weight: 550;
+        font-size: 13px;
+
+    }
+    .form-control input:focus {
+        outline: none;
+    }
+    .bar {
+        position: relative;
+        display:block;
+        width:100%;
+        margin-left: 0
+    }
+
+    .bar:before{
+        content: '';
+        height: 2px;
+        width: 0;
+        bottom: 0;
+        position: absolute;
+        background: black;
+        transition: 0.2s ease all;
+        -moz-transition: 0.2s ease all;
+        -webkit-transition: 0.2s ease all;
+    }
+
+
+    .form-control input:focus ~ .bar:before{
+        width: 87%;
+    }
+
+    .control{
+        text-decoration: none;
+        color: white;
+        font-family:Univers, sans-serif;
+        background-color: black;
+        border: 1px solid white;
+        border-radius: 3px;
+        box-shadow: inset 0 0 0 0 white;
+        transition: ease-out 0.3s;
+        padding: .65rem 1.75rem;
+        font-weight: 200;
+        font-size: 0.9em;
+        letter-spacing: 0.1em;
+
+    }
+    .control:hover{
+        border: 1px solid black;
+        box-shadow: inset 400px 0 0 0 white;
+        color: black;
+
+    }
+    #d2{
+        height: 75vh;
+        background-color: white;
+        font-family: 'Montserrat', sans-serif;
+
+    }
+    .main-footer{
+        display: flex;
+
+        width: 95%;
+        margin-top: 5%;
+        gap: 5%;
+
+    }
+    .lower-footer{
+        display: flex;
+        height: 20vh;
+        width: 95%;
+        align-items: center;
+    }
+
+    .main-footer h3{
+        font-weight: 500;
+        -webkit-font-smoothing: antialiased;
+        color: #1C1C1C;
+        font-size: 14px;
+        letter-spacing: 0.2em;
+        margin-bottom: 2em;
+    }
+
+    .main-footer p, .main-footer a{
+        color: #8B8B8B;
+        text-decoration: none;
+
+    }
+    .main-footer p{
+        font-size: 14px;
+        line-height: 1.8em;
+        margin-bottom: 2em;
+        letter-spacing:  0.1em;
+    }
+    .main-footer a:hover{
+        color: black;
+        font-weight: 500;
+        transition: 0.4s ease;
+    }
+
+</style>

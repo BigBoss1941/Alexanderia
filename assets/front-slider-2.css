@@ -1,0 +1,128 @@
+#d1 {
+    height: 100vh;
+    width: 100vw;
+    background-color: #f5f3f3;
+    margin-left: 0;
+    overflow-x: hidden;
+    padding-bottom: 5%;
+    overflow-y: clip;
+    position: relative;
+}
+
+#image-track {
+    padding-top: 30px;
+    display: flex;
+    gap: 4vmin;
+    position: absolute;
+    left: 3%;
+    top: 50%;
+    transform: translate(0%, -50%);
+    user-select: none; /* -- Prevent image highlighting -- */
+
+}
+
+ .image {
+    width: 50vmin;
+    height: 76vmin;
+    object-fit: cover;
+     object-position: 60% center;
+    position: relative;
+
+     transition: 0.7s ease-out;
+}
+ .start{
+     opacity: 0;
+     margin-top: 20vh;
+}
+#image-track .aha:after{
+    background: linear-gradient( transparent 25%, red, transparent 75%);
+    height: 80vh;
+    width: 1px;
+    content: "";
+    position: absolute;
+    margin-left: -9.37%;
+    top: 25%;
+    transition: top 300ms ease, opacity 300ms ease-out;
+    opacity: 0;
+
+}
+#image-track .aha:hover:after{
+    top: 0;
+    opacity: 1;
+}
+.text{
+    width: 100vmin;
+    height: 76vmin;
+    object-fit: cover;
+    object-position: 100% center;
+    color: rgb(15,15,15);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 10%;
+    border: 1px solid rgb(15,15,15);
+    padding-left: 1rem;
+}
+@media screen and (min-width: 915px){
+    .text h1{
+        font-size: 4em;
+        font-family: "Montserrat Thin", sans-serif;
+        font-weight: 400;
+        transition: 0.2s ease-in;
+    }
+}
+@media screen and (max-width: 915px){
+    .text h1{
+        font-size: 2em;
+        font-family: "Montserrat Thin", sans-serif;
+        font-weight: 400;
+        transition: 0.2s ease-in;
+    }
+}
+.see{
+    text-decoration: none;
+    color: white;
+    font-family:Univers-ultra, sans-serif;
+    font-weight: 50;
+    background-color: black;
+    border: 1px solid white;
+    padding: 1em 1em 1em 1em;
+    border-radius: 3px;
+    box-shadow: inset 0 0 0 0 white;
+    transition: ease-out 0.3s;
+    position: absolute;
+    bottom: 0;
+}
+.see:hover{
+    border: 1px solid white;
+    box-shadow: inset 180px 0 0 0 white;
+    color: black;
+
+}
+.text p{
+    margin-left: 0;
+    font-size: 1.5em;
+    font-family: Univer, sans-serif;
+    font-weight: 10;
+}
+.text span{
+    color: rgb(15,15,15);
+    font-weight: bold;
+    font-size: 1.7em;
+    margin-left: 1em;
+    transition: 0.3s ease;
+
+}
+.text span:hover{
+    color: darkred;
+    font-size: 2em;
+}
+.text h1:hover{
+    color: darkred;
+}
+.aha{
+    overflow: clip;
+    width: 50vmin;
+    height: 76vmin;
+    border: 1px solid rgb(15,15,15);
+}

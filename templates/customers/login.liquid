@@ -1,0 +1,237 @@
+
+    <!-- /templates/customers/login.liquid -->
+
+    <article class="signin" style="display: flex; flex-direction: column;padding-top: 15vh; font-family: Montserrat,sans-serif">
+        <h1 style="padding-top: 3rem; font-size: 2em">Login</h1>
+        <h2 style="padding-top: 3rem; padding-bottom: 3rem;font-size: 1.2em; font-weight: lighter;text-align: center">Enter your email and password to login:</h2>
+        <form autocomplete="off" method="post" style="width: 60%" action="/account/login" id="customer_login" accept-charset="UTF-8" data-login-with-shop-sign-in="true" data-bitwarden-watching="1" onsubmit="window.Shopify.recaptchaV3.addToken(this, &quot;customer_login&quot;); return false;"><input type="hidden" name="form_type" value="customer_login"><input type="hidden" name="utf8" value="✓">
+            {% if form.posted_unsuccessfully? %}<p style="padding-top: 50vh; padding-left: 50%;font-family: Montserrat,sans-serif ">Thank you for your contact</p>
+            {% endif %}
+            {{ form.errors | default_errors }}
+        <div style="display: flex;gap: 4%; flex-direction: column; width: 100%; height: 2rem;padding-bottom: 2rem">
+            <div class="this" style="display: flex; ">
+                <input autocomplete="off" required class="input2" style="height: 1.70rem;padding-left: 0.7rem;width: calc(100% - 0.7rem)" id="ContactFormName" type="email" name="customer[email]" value="">
+                <label class="flot" for="customer_email">Email Address</label>
+            </div>
+            <div class="this" style="display: flex; ">
+                <input autocomplete="off" required class="input2" style="height: 1.70rem;padding-left: 0.7rem;width: calc(100% - 0.7rem)" id="ContactFormEmail" type="password" name="customer[password]">
+                <label class="flot" for="customer_password">Password</label>
+            </div>
+
+            <button class="control" type="submit">Sign In</button>
+
+        </div>
+        </form>
+
+        <span style="margin-top: 9rem;height: 1px; width: 20%;background-color: black"></span>
+        <h2 style="padding-top: 1.5rem; font-size: 2em" >Or</h2>
+        <h3 style="padding-top: 1rem; padding-bottom: 3rem;font-size: 1.2em; font-weight: lighter">Register with us!</h3>
+        <a class="control" href="/account/register">Register</a>
+        <button style=" margin-top: 1rem" class="control switch">Forgot password?</button>
+    </article>
+
+    <article class="forgor notvisib">
+        <h1 style="padding-top: 3rem; font-size: 2em">Forgot Password</h1>
+        <h2 style="padding-top: 3rem; padding-bottom: 3rem;font-size: 1.2em; font-weight: lighter;text-align: center">Enter your email to recover your credentials :</h2>
+        {% form 'recover_customer_password', class: 'recorvr' %}
+
+            {{ form.errors | default_errors }}
+            <div class="this" style="display: flex;">
+                <input autocomplete="off" required class="input2" style="height: 1.70rem;padding-left: 0.7rem;width: calc(100% - 0.7rem)" id="ContactFormEmail" type="email" name="email">
+                <label class="flot" for="customer_email">Email Address</label>
+            </div>
+            <input style="margin-top: 2rem" class="control" type="submit" value="Recover" />
+
+
+        {% endform %}
+        <button style=" margin-top: 3rem" class="control switch2" >No, i remember it</button>
+    </article>
+
+<script>
+    document.querySelectorAll(".input2").forEach((input) => {
+        input.addEventListener("input", () => {
+            if (input.value.trim().length !== 0){
+                input.parentElement.querySelector("label").classList.add("active1")
+            }
+            else{
+                input.parentElement.querySelector("label").classList.remove("active1")
+            }
+
+        })
+    })
+    document.querySelector(".switch").addEventListener("click", () => {
+        console.log("hi")
+        document.querySelector(".signin").classList.add("notvisib");
+        document.querySelector(".forgor").classList.remove("notvisib");
+    });
+    document.querySelector(".switch2").addEventListener("click", () => {
+        document.querySelector(".signin").classList.remove("notvisib");
+        document.querySelector(".forgor").classList.add("notvisib");
+    });
+</script>
+<style>
+    @media screen and (max-width: 915px) {
+        .this{
+            margin-bottom: 2em;
+            position: relative;
+            height: 100%; width: 100%
+
+
+        }
+    }
+    @media screen and (min-width: 915px) {
+        .this{
+            margin-bottom: 2em;
+            position: relative;
+            height: 100%; width: 50%
+
+
+        }
+    }
+    article .control{
+        transition: ease-out 0.7s;
+    }
+    .recorvr{
+        display: flex;
+        flex-direction: column;
+        width: 60%;
+
+    }
+    .forgor{
+        display: flex;
+        flex-direction: column;
+        font-family: Montserrat,sans-serif;
+        width: 100%;
+        transition: 0.5s ease-out;
+        transform: translateY(-110%);
+    }
+    .visib{
+        opacity: 1;
+    }
+    .notvisib{
+        opacity: 0;
+        transform: translateY(5%);
+        pointer-events: none;
+    }
+    .signin{
+        transition: 0.3s ease-out;
+    }
+    .selection{
+        background-color: white;
+        border: 1px solid black;
+        transition: ease 0.5s;
+    }
+    .selection:hover{
+        border: 1px solid black;
+        box-shadow: inset 1000px 0 0 0 black;
+        color: white;
+
+    }
+    .selection option:hover{
+        box-shadow: 0 0 10px 100px #1C1C1C inset;
+    }
+    .btnsbmt{
+        background-color: black;
+        margin-top: 2rem;
+        color: white;
+        text-decoration: none;
+        font-family:Univers, sans-serif;
+        border: 1px solid white;
+        border-radius: 3px;
+        box-shadow: inset 0 0 0 0 white;
+        transition: ease-out 0.5s;
+        padding: .65rem 1.75rem;
+        font-weight: 200;
+        font-size: 0.9em;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        cursor: pointer;
+
+    }
+    .btnsbmt:hover{
+        border: 1px solid black;
+        box-shadow: inset 1000px 0 0 0 white;
+        color: black;
+
+    }
+    .cntc form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+
+    }
+
+    .flot{
+        color: #999;
+        font-size: 12px;
+        font-weight: normal;
+        font-family: Montserrat, sans-serif;
+        position: absolute;
+        pointer-events: none;
+        left: 1rem;
+        top: 9px;
+        transition: 0.2s ease all;
+        -moz-transition: 0.2s ease all;
+        -webkit-transition: 0.2s ease all;
+
+    }
+    .this .active1{
+        top: -7px;
+        color: black;
+        font-weight: 550;
+        font-size: 13px;
+        background-color: white;
+        padding-left: 10px;
+        padding-right: 10px;
+
+    }
+    .this input:focus ~ .flot{
+        top: -7px;
+        color: black;
+        font-weight: 550;
+        font-size: 13px;
+        background-color: white;
+        padding-left: 10px;
+        padding-right: 10px;
+
+    }
+    .this input:focus {
+        outline: none;
+    }
+    .flot2{
+        color: #999;
+        font-size: 12px;
+        font-weight: normal;
+        font-family: Montserrat, sans-serif;
+        position: absolute;
+        pointer-events: none;
+        left: 1rem;
+        top: 50px;
+        transition: 0.2s ease all;
+        -moz-transition: 0.2s ease all;
+        -webkit-transition: 0.2s ease all;
+
+    }
+    .this textarea:focus ~ .flot2{
+        top: 25px;
+        color: black;
+        font-weight: 550;
+        font-size: 13px;
+        background-color: white;
+        padding-left: 10px;
+        padding-right: 10px;
+
+    }
+    .this .active2{
+        top: 25px;
+        color: black;
+        font-weight: 550;
+        font-size: 13px;
+        background-color: white;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .this textarea:focus {
+        outline: none;
+    }
+</style>

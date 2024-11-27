@@ -1,0 +1,216 @@
+<!-- /templates/customers/register.liquid -->
+
+<section style="font-family: Montserrat,sans-serif">
+        <h1 style="padding-top: 3rem; font-size: 2em;text-align: center">Join us</h1>
+        <h2 style="padding-top: 3rem;font-size: 1.2em; font-weight: lighter;text-align: center">Choose your credentials:</h2>
+    {% form 'create_customer',class:'formhere' %}
+
+        {{ form.errors | default_errors }}
+
+
+        <div style="display: flex;gap: 4%; flex-direction: column; width: 100%; height: 2rem;padding-bottom: 2rem">
+                <div class="this" style="display: flex; height: 100%; width: 50%">
+                        <label class="flot" for="customer[first_name]">First Name</label>
+                        <input autocomplete="off" type="text" name="customer[first_name]" size="30" value="" required class="input2" style="height: 1.70rem;padding-left: 0.7rem;width: calc(100% - 0.7rem)" >
+
+                </div>
+                <div class="this" style="display: flex; height: 100%; width: 50%">
+                        <label class="flot" for="customer[last_name]">Last Name</label>
+                        <input autocomplete="off" type="text" name="customer[last_name]" size="30" value="" required class="input2" style="height: 1.70rem;padding-left: 0.7rem;width: calc(100% - 0.7rem)" >
+
+                </div>
+                <div class="this" style="display: flex; height: 100%; width: 50%">
+                        <label class="flot" for="customer[email]">Email Address</label>
+                        <input autocomplete="off" type="email" name="customer[email]" size="30" value="" required class="input2" style="height: 1.70rem;padding-left: 0.7rem;width: calc(100% - 0.7rem)" >
+
+                </div>
+                <div class="this" style="display: flex; height: 100%; width: 50%">
+                        <label class="flot" for="customer[password]">Password</label>
+                        <input autocomplete="off" type="password" name="customer[password]" size="30" value="" required class="input2" style="height: 1.70rem;padding-left: 0.7rem;width: calc(100% - 0.7rem)" >
+
+                </div>
+
+                <input class="control" type="submit" value="Create" />
+        </div>
+
+    {% endform %}
+</section>
+<script>
+        document.querySelectorAll(".input2").forEach((input) => {
+                input.addEventListener("input", () => {
+                        if (input.value.trim().length !== 0){
+                                input.parentElement.querySelector("label").classList.add("active1")
+                        }
+                        else{
+                                input.parentElement.querySelector("label").classList.remove("active1")
+                        }
+
+                })
+        })
+        document.querySelector(".switch").addEventListener("click", () => {
+                console.log("hi")
+                document.querySelector(".signin").classList.add("notvisib");
+                document.querySelector(".forgor").classList.remove("notvisib");
+        });
+        document.querySelector(".switch2").addEventListener("click", () => {
+                document.querySelector(".signin").classList.remove("notvisib");
+                document.querySelector(".forgor").classList.add("notvisib");
+        });
+</script>
+<style>
+        .formhere{
+                height: 60vh;
+                margin-top: 7%;
+        }
+        article .control{
+                transition: ease-out 0.7s;
+        }
+        .recorvr{
+                display: flex;
+                flex-direction: column;
+                width: 60%;
+
+        }
+        .forgor{
+                display: flex;
+                flex-direction: column;
+                font-family: Montserrat,sans-serif;
+                width: 100%;
+                transition: 0.5s ease-out;
+                transform: translateY(-110%);
+        }
+        .visib{
+                opacity: 1;
+        }
+        .notvisib{
+                opacity: 0;
+                transform: translateY(5%);
+                pointer-events: none;
+        }
+        .signin{
+                transition: 0.3s ease-out;
+        }
+        .selection{
+                background-color: white;
+                border: 1px solid black;
+                transition: ease 0.5s;
+        }
+        .selection:hover{
+                border: 1px solid black;
+                box-shadow: inset 1000px 0 0 0 black;
+                color: white;
+
+        }
+        .selection option:hover{
+                box-shadow: 0 0 10px 100px #1C1C1C inset;
+        }
+        .btnsbmt{
+                background-color: black;
+                margin-top: 2rem;
+                color: white;
+                text-decoration: none;
+                font-family:Univers, sans-serif;
+                border: 1px solid white;
+                border-radius: 3px;
+                box-shadow: inset 0 0 0 0 white;
+                transition: ease-out 0.5s;
+                padding: .65rem 1.75rem;
+                font-weight: 200;
+                font-size: 0.9em;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                cursor: pointer;
+
+        }
+        .btnsbmt:hover{
+                border: 1px solid black;
+                box-shadow: inset 1000px 0 0 0 white;
+                color: black;
+
+        }
+        .cntc form {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+
+        }
+        .this{
+                margin-bottom: 2em;
+                position: relative;
+
+
+        }
+        .flot{
+                color: #999;
+                font-size: 12px;
+                font-weight: normal;
+                font-family: Montserrat, sans-serif;
+                position: absolute;
+                pointer-events: none;
+                left: 1rem;
+                top: 9px;
+                transition: 0.2s ease all;
+                -moz-transition: 0.2s ease all;
+                -webkit-transition: 0.2s ease all;
+
+        }
+        .this .active1{
+                top: -7px;
+                color: black;
+                font-weight: 550;
+                font-size: 13px;
+                background-color: white;
+                padding-left: 10px;
+                padding-right: 10px;
+
+        }
+        .this input:focus ~ .flot{
+                top: -7px;
+                color: black;
+                font-weight: 550;
+                font-size: 13px;
+                background-color: white;
+                padding-left: 10px;
+                padding-right: 10px;
+
+        }
+        .this input:focus {
+                outline: none;
+        }
+        .flot2{
+                color: #999;
+                font-size: 12px;
+                font-weight: normal;
+                font-family: Montserrat, sans-serif;
+                position: absolute;
+                pointer-events: none;
+                left: 1rem;
+                top: 50px;
+                transition: 0.2s ease all;
+                -moz-transition: 0.2s ease all;
+                -webkit-transition: 0.2s ease all;
+
+        }
+        .this textarea:focus ~ .flot2{
+                top: 25px;
+                color: black;
+                font-weight: 550;
+                font-size: 13px;
+                background-color: white;
+                padding-left: 10px;
+                padding-right: 10px;
+
+        }
+        .this .active2{
+                top: 25px;
+                color: black;
+                font-weight: 550;
+                font-size: 13px;
+                background-color: white;
+                padding-left: 10px;
+                padding-right: 10px;
+        }
+        .this textarea:focus {
+                outline: none;
+        }
+</style>

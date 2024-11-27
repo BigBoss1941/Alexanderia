@@ -1,0 +1,203 @@
+<section>
+  <div style="position: relative">
+    <img style="object-fit: cover ;height: 75vmin; width: 100%;" src="{{'contact.jpg' | asset_url }}" />
+      <div style="background-color: rgba(53,33,89,0.49); position: absolute; top: 0; left: 0; height: 75vmin; z-index: 3; width: 100%"></div>
+
+      <div style="position: absolute;top: 0;z-index: 3;width: 100%;height: 75vmin; display: flex; align-items: center; justify-content: center">
+        <h1 style="color: white; font-family: Montserrat,sans-serif;font-size: 3em">Contact Us</h1>
+    </div>
+  </div>
+  <div style="margin-top: 10vh;width: 100%; text-align: center; font-family: Montserrat,sans-serif">
+    <h2 style="font-size: 0.9em; text-transform: uppercase; padding-bottom: 2rem">Need assistance?</h2>
+    <h1 style="text-transform: uppercase; font-size: 2.5em; text-space: 0.2em; padding-bottom: 3rem">We are here to help</h1>
+
+    <p style="padding-bottom: 1rem">If you have any questions, you can take a look at our FAQ, in the About page.<p></p>
+    <p style="padding-bottom: 0.5rem">Another request?</p>
+    <p>Our team is at your disposal to answer it.</p>
+  </div>
+  <div class="cntc" style="padding-top: 2rem;padding-bottom: 4rem;display: flex;width: 55%">
+    {% form 'contact' %}
+      {% if form.posted_successfully? %}<p style="padding-top: 50vh; padding-left: 50%;font-family: Montserrat,sans-serif ">Thank you for your contact</p>
+      {% endif %}
+      {{ form.errors | default_errors }}
+      <div style="display: flex;gap: 4%; flex-direction: row; width: 100%; height: 2rem;padding-bottom: 2rem">
+        <div class="this" style="display: flex; height: 100%; width: 49%">
+            <input required class="input2" style="height: 100%;padding-left: 0.7rem;width: calc(100% - 0.7rem)" type="text" id="ContactFormName" name="contact[name]" value="">
+            <label class="flot" for="ContactFormName">name</label>
+        </div>
+        <div class="this" style="display: flex; height: 100%; width: 49%">
+            <input required class="input2" style="height: 100%;padding-left: 0.7rem;width: calc(100% - 0.7rem)" type="email" id="ContactFormEmail" name="contact[email]">
+            <label class="flot" for="ContactFormEmail">email</label>
+        </div>
+
+      </div>
+      <div style="width: 100%">
+        <select required class="selection" style="padding-left: 0.7rem;width: calc(100%);height: 3rem">
+            <option style="padding-left: 0.7rem;" value="contact">Subject - I want to contact you</option>
+            <option style="padding-left: 0.7rem;" value="refund">Subject - I want a refund</option>
+            <option style="padding-left: 0.7rem;" value="exchange">Subject - I want to exchange my product</option>
+            <option style="padding-left: 0.7rem;" value="complaint">Subject - I want to make a complaint</option>
+            <option style="padding-left: 0.7rem;" value="opportunity">Subject - I want to discuss an opportunity</option>
+            <option style="padding-left: 0.7rem;" value="other">Subject - Other</option>
+        </select>
+      </div>
+      <div class="this" style="width: 100%">
+        <textarea required  class="message" style="        padding-left: 1rem;
+        padding-top: 17px;resize: vertical;width: calc(99% - 1rem); margin-top: 2rem" rows="10" id="ContactFormMessage" name="contact[body]"></textarea>
+        <label class="flot2" for="ContactFormMessage">message</label>
+
+      </div>
+      <div style="width: 100%; height: 3rem">
+        <input class="btnsbmt" style="height: 100%;width: 100%" type="submit" value="send">
+      </div>
+    {% endform %}
+  </div>
+
+</section>
+<script>
+    document.querySelectorAll(".input2").forEach((input) => {
+        input.addEventListener("input", () => {
+            if (input.value.trim().length !== 0){
+                input.parentElement.querySelector("label").classList.add("active1")
+            }
+            else{
+                input.parentElement.querySelector("label").classList.remove("active1")
+            }
+
+        })
+    })
+    const text  =  document.querySelector(".message");
+    text.addEventListener("input", () =>{
+        if (text.value.trim().length !== 0){
+            text.parentElement.querySelector("label").classList.add("active2")
+        }
+        else{
+            text.parentElement.querySelector("label").classList.remove("active2")
+        }
+    })
+</script>
+<style>
+    .selection{
+        background-color: white;
+        border: 1px solid black;
+        transition: ease 0.5s;
+    }
+    .selection:hover{
+        border: 1px solid black;
+        box-shadow: inset 1000px 0 0 0 black;
+        color: white;
+
+    }
+    .selection option:hover{
+        box-shadow: 0 0 10px 100px #1C1C1C inset;
+    }
+    .btnsbmt{
+        background-color: black;
+        margin-top: 2rem;
+        color: white;
+        text-decoration: none;
+        font-family:Univers, sans-serif;
+        border: 1px solid white;
+        border-radius: 3px;
+        box-shadow: inset 0 0 0 0 white;
+        transition: ease-out 0.5s;
+        padding: .65rem 1.75rem;
+        font-weight: 200;
+        font-size: 0.9em;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        cursor: pointer;
+
+    }
+    .btnsbmt:hover{
+        border: 1px solid black;
+        box-shadow: inset 1000px 0 0 0 white;
+        color: black;
+
+    }
+  .cntc form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+  }
+  .this{
+      margin-bottom: 2em;
+      position: relative;
+
+
+  }
+  .flot{
+      color: #999;
+      font-size: 12px;
+      font-weight: normal;
+      font-family: Montserrat, sans-serif;
+      position: absolute;
+      pointer-events: none;
+      left: 1rem;
+      top: 12px;
+      transition: 0.2s ease all;
+      -moz-transition: 0.2s ease all;
+      -webkit-transition: 0.2s ease all;
+
+  }
+  .this .active1{
+      top: -7px;
+      color: black;
+      font-weight: 550;
+      font-size: 13px;
+      background-color: white;
+      padding-left: 10px;
+      padding-right: 10px;
+
+  }
+    .this input:focus ~ .flot{
+        top: -7px;
+        color: black;
+        font-weight: 550;
+        font-size: 13px;
+        background-color: white;
+        padding-left: 10px;
+        padding-right: 10px;
+
+    }
+  .this input:focus {
+      outline: none;
+  }
+    .flot2{
+        color: #999;
+        font-size: 12px;
+        font-weight: normal;
+        font-family: Montserrat, sans-serif;
+        position: absolute;
+        pointer-events: none;
+        left: 1rem;
+        top: 50px;
+        transition: 0.2s ease all;
+        -moz-transition: 0.2s ease all;
+        -webkit-transition: 0.2s ease all;
+
+    }
+    .this textarea:focus ~ .flot2{
+        top: 25px;
+        color: black;
+        font-weight: 550;
+        font-size: 13px;
+        background-color: white;
+        padding-left: 10px;
+        padding-right: 10px;
+
+    }
+    .this .active2{
+        top: 25px;
+        color: black;
+        font-weight: 550;
+        font-size: 13px;
+        background-color: white;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .this textarea:focus {
+        outline: none;
+    }
+</style>

@@ -1,0 +1,76 @@
+<section id="fabric">
+    <div class="fabric_c">
+        <div class="fabric_contained">
+            <p style="font-weight: lighter;">Materials<br/></p>
+            <p style="font-size: 0.85em">We only work with the best leather, chosen in collaboration with our factory. Made in Morroco.<br/></p>
+            <a href="/about">Learn more</a>
+        </div>
+    </div>
+</section>
+<style>
+    #fabric{
+        height: 100vh;
+        background-image: url("{{'fabric.jpg' | asset_url}}");
+        background-size: cover;
+    }
+    .fabric_c{
+        height: 100%;
+        width: 100%;
+        background-color: rgba(113,113,113,0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    @media screen and (max-width: 915px) {
+        .fabric_contained{
+            background-color: white;
+            width: 60%;
+            height: 30%;display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;gap: 15%;
+            font-family: Montserrat,sans-serif;
+            font-weight: bolder;
+            font-size: 0.9em;
+
+        }
+    }
+    @media screen and (min-width: 915px) {
+        .fabric_contained{
+            background-color: white;
+            width: 30%;
+            height: 30%;display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;gap: 15%;
+            font-family: Montserrat,sans-serif;
+            font-weight: bolder;
+            font-size: 0.9em;
+
+        }
+    }
+    .fabric_contained p{
+        width: 90%;
+        text-align: center;
+
+    }
+    .fabric_contained a{
+        text-decoration: none;
+        color: black;
+        position: relative;
+    }
+    .fabric_contained a:after{
+        content: '';
+        width: 100%;
+        height: 1px;
+        background-color: black;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        transition: 0.5s ease;
+    }
+    .fabric_contained a:hover:after{
+        width: 0;
+
+    }
+</style>
